@@ -67,7 +67,8 @@ class AstroRemoteDataSourceImpl implements AstroRemoteDataSource {
       StarChartModel starChartModel) async {
     _dio.options.headers['authorization'] = 'Basic $encodedHash';
     try {
-      final response = await _dio.get(ConstantsUrlApi.starChartBaseUrl);
+      final response = await _dio.post(ConstantsUrlApi.starChartBaseUrl,
+          data: starChartModel.toStarChartRequest());
       final imageDataResponse = ImageDataResponse.fromJson(response.data);
       return imageDataResponse.toImageDataModel();
     } on DioError catch (dioError, _) {
@@ -81,7 +82,7 @@ class AstroRemoteDataSourceImpl implements AstroRemoteDataSource {
     _dio.options.headers['authorization'] = 'Basic $encodedHash';
     try {
       final response = await _dio.post(ConstantsUrlApi.moonPhaseBaseUrl,
-          data: moonPhaseModel.toMoonPhaseRequest);
+          data: moonPhaseModel.toMoonPhaseRequest());
       final imageDataResponse = ImageDataResponse.fromJson(response.data);
       return imageDataResponse.toImageDataModel();
     } on DioError catch (dioError, _) {
