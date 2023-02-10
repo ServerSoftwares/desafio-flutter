@@ -4,7 +4,9 @@ part 'body_list_response.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class BodyListResponse {
-  BodyListResponse({this.bodies});
+  BodyListResponse({
+    this.bodies,
+  });
 
   factory BodyListResponse.fromJson(Map<String, dynamic> json) =>
       _$BodyListResponseFromJson(json);
