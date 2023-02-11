@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 
@@ -81,8 +81,10 @@ class AstroRemoteDataSourceImpl implements AstroRemoteDataSource {
       MoonPhaseModel moonPhaseModel) async {
     _dio.options.headers['authorization'] = 'Basic $encodedHash';
     try {
-      final response = await _dio.post(ConstantsUrlApi.moonPhaseBaseUrl,
-          data: moonPhaseModel.toMoonPhaseRequest());
+      final response = await _dio.post(
+        ConstantsUrlApi.moonPhaseBaseUrl,
+        data: moonPhaseModel.toMoonPhaseRequest().toJson(),
+      );
       final imageDataResponse = ImageDataResponse.fromJson(response.data);
       return imageDataResponse.toImageDataModel();
     } on DioError catch (dioError, _) {

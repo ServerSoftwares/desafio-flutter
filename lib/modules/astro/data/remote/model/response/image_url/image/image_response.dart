@@ -11,6 +11,7 @@ class ImageResponse {
   factory ImageResponse.fromJson(Map<String, dynamic> json) =>
       _$ImageResponseFromJson(json);
 
+  @JsonKey(name: 'imageUrl')
   final String? imageUrl;
 
   Map<String, dynamic> toJson() => _$ImageResponseToJson(this);
