@@ -1,4 +1,4 @@
-import '../../domain/model/body/body_details_data_model.dart';
+import '../../domain/model/body/body_details_model.dart';
 import '../../domain/model/body/body_list_data_model.dart';
 import '../../domain/model/body/body_model.dart';
 import '../../domain/model/image_url/image_data_model.dart';
@@ -15,9 +15,9 @@ class AstroRepositoryImpl implements AstroRepository {
   final AstroRemoteDataSource _astroRemoteDataSource;
 
   @override
-  Future<BodyDetailsDataModel> getBodyDetailsDataModel(
+  Future<BodyDetailsModel> getBodyDetailsModel(
           BodyModel bodyModel, String bodyId) async =>
-      _astroRemoteDataSource.getBodyDetailsDataModel(bodyModel, bodyId);
+      _astroRemoteDataSource.getBodyDetailsModel(bodyModel, bodyId);
 
   @override
   Future<BodyListDataModel> getBodyList() async =>

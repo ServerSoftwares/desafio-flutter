@@ -13,15 +13,10 @@ BodyTableRowsResponse _$BodyTableRowsResponseFromJson(
           ?.map(
               (e) => BodyTableCellsResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      entry: json['entry'] == null
-          ? null
-          : BodyTableEntryResponse.fromJson(
-              json['entry'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$BodyTableRowsResponseToJson(
         BodyTableRowsResponse instance) =>
     <String, dynamic>{
       'cells': instance.cells,
-      'entry': instance.entry,
     };

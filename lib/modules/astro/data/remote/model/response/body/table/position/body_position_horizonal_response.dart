@@ -9,14 +9,12 @@ part 'body_position_horizonal_response.g.dart';
 class BodyPositionHorizonalResponse {
   BodyPositionHorizonalResponse({
     this.altitude,
-    this.azimuth,
   });
 
   factory BodyPositionHorizonalResponse.fromJson(Map<String, dynamic> json) =>
       _$BodyPositionHorizonalResponseFromJson(json);
 
   final BodyAltitudeResponse? altitude;
-  final BodyAltitudeResponse? azimuth;
 
   Map<String, dynamic> toJson() => _$BodyPositionHorizonalResponseToJson(this);
 }

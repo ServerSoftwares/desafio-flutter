@@ -13,15 +13,10 @@ BodyPositionHorizonalResponse _$BodyPositionHorizonalResponseFromJson(
           ? null
           : BodyAltitudeResponse.fromJson(
               json['altitude'] as Map<String, dynamic>),
-      azimuth: json['azimuth'] == null
-          ? null
-          : BodyAltitudeResponse.fromJson(
-              json['azimuth'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$BodyPositionHorizonalResponseToJson(
         BodyPositionHorizonalResponse instance) =>
     <String, dynamic>{
       'altitude': instance.altitude,
-      'azimuth': instance.azimuth,
     };

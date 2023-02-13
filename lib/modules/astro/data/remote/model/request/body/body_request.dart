@@ -10,16 +10,20 @@ class BodyRequest {
     required this.fromDate,
     required this.toDate,
     required this.time,
+    required this.elevation,
   });
 
   factory BodyRequest.fromJson(Map<String, dynamic> json) =>
       _$BodyRequestFromJson(json);
 
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
+  @JsonKey(name: 'from_date')
   final String fromDate;
+  @JsonKey(name: 'to_date')
   final String toDate;
   final String time;
+  final double elevation;
 
   Map<String, dynamic> toJson() => _$BodyRequestToJson(this);
 }

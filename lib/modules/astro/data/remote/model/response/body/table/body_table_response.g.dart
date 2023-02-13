@@ -8,8 +8,6 @@ part of 'body_table_response.dart';
 
 BodyTableResponse _$BodyTableResponseFromJson(Map<String, dynamic> json) =>
     BodyTableResponse(
-      header:
-          (json['header'] as List<dynamic>?)?.map((e) => e as String).toList(),
       rows: (json['rows'] as List<dynamic>?)
           ?.map(
               (e) => BodyTableRowsResponse.fromJson(e as Map<String, dynamic>))
@@ -18,6 +16,5 @@ BodyTableResponse _$BodyTableResponseFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$BodyTableResponseToJson(BodyTableResponse instance) =>
     <String, dynamic>{
-      'header': instance.header,
       'rows': instance.rows,
     };

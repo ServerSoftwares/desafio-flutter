@@ -10,8 +10,6 @@ BodyTableCellsResponse _$BodyTableCellsResponseFromJson(
         Map<String, dynamic> json) =>
     BodyTableCellsResponse(
       date: json['date'] as String?,
-      id: json['id'] as String?,
-      name: json['name'] as String?,
       distance: json['distance'] == null
           ? null
           : BodyDistanceResponse.fromJson(
@@ -26,8 +24,6 @@ Map<String, dynamic> _$BodyTableCellsResponseToJson(
         BodyTableCellsResponse instance) =>
     <String, dynamic>{
       'date': instance.date,
-      'id': instance.id,
-      'name': instance.name,
       'distance': instance.distance,
       'position': instance.position,
     };

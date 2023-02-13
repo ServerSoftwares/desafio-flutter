@@ -6,14 +6,12 @@ part 'body_altitude_response.g.dart';
 class BodyAltitudeResponse {
   BodyAltitudeResponse({
     this.degrees,
-    this.string,
   });
 
   factory BodyAltitudeResponse.fromJson(Map<String, dynamic> json) =>
       _$BodyAltitudeResponseFromJson(json);
 
   final String? degrees;
-  final String? string;
 
   Map<String, dynamic> toJson() => _$BodyAltitudeResponseToJson(this);
 }

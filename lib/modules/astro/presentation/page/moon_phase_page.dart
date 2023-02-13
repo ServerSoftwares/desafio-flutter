@@ -2,11 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:observador_app/modules/astro/presentation/common/widgets/custom_error_widget.dart';
-import 'package:observador_app/modules/astro/presentation/page/moon_phase_page_state.dart';
 
 import '../../constants/astro_constant_fonts.dart';
-import '../../constants/astro_constant_images.dart';
 import '../../data/remote/data_source/astro_remote_data_source.dart';
 import '../../data/repository/astro_repository_impl.dart';
 import '../../domain/repository/astro_repository.dart';
@@ -14,7 +11,12 @@ import '../../domain/use_case/get_moon_phase_image_use_case.dart';
 import '../../external/remote_data_source/astro_remote_data_source_impl.dart';
 import '../../utils/date_time_extensions.dart';
 import '../common/constants/astro_constant_colors.dart';
+import '../common/widgets/custom_error_widget.dart';
+import '../common/widgets/custom_float_action_button.dart';
+import '../common/widgets/custom_image_loader.dart';
 import '../controller/moon_phase_page_controller.dart';
+import 'celestial_body_page.dart';
+import 'moon_phase_page_state.dart';
 
 class MoonPhasePage extends StatefulWidget {
   const MoonPhasePage({Key? key}) : super(key: key);
@@ -111,6 +113,32 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
             ),
           ),
         ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            CustomFloatActionButton(
+              icon: Icons.sunny,
+              onClickButton: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CelestialBodyPage(
+                      latitude: _currentPosition!.latitude,
+                      longitude: _currentPosition!.longitude,
+                    ),
+                  ),
+                );
+              },
+            ),
+            CustomFloatActionButton(
+              icon: Icons.star,
+              onClickButton: () {},
+            ),
+            CustomFloatActionButton(
+              icon: Icons.favorite,
+              onClickButton: () {},
+            ),
+          ],
+        ),
         body: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -197,23 +225,8 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                           );
                         case MoonPhasePageState.success:
                           return Center(
-                            child: FadeInImage(
-                              height: 600,
-                              fit: BoxFit.fitWidth,
-                              alignment: Alignment.topCenter,
-                              placeholderFit: BoxFit.scaleDown,
-                              image:
-                                  NetworkImage(controller.image!.data.imageUrl),
-                              placeholder: const AssetImage(
-                                  AstroConstantsImages.loadingImage),
-                              imageErrorBuilder: (content, error, stackTrace) =>
-                                  Image.asset(
-                                AstroConstantsImages.errorImage,
-                                width: 100,
-                                height: 180,
-                                alignment: Alignment.center,
-                              ),
-                            ),
+                            child: CustomImageLoader(
+                                imageUrl: controller.image!.data.imageUrl),
                           );
                       }
                     },

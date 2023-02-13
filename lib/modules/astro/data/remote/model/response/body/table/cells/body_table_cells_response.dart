@@ -9,8 +9,6 @@ part 'body_table_cells_response.g.dart';
 class BodyTableCellsResponse {
   BodyTableCellsResponse({
     this.date,
-    this.id,
-    this.name,
     this.distance,
     this.position,
   });
@@ -19,8 +17,6 @@ class BodyTableCellsResponse {
       _$BodyTableCellsResponseFromJson(json);
 
   final String? date;
-  final String? id;
-  final String? name;
   final BodyDistanceResponse? distance;
   final BodyPositionResponse? position;
 

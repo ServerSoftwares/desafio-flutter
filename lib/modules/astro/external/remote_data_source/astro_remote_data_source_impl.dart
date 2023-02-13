@@ -7,13 +7,13 @@ import '../../constants/constants_url_api.dart';
 import '../../data/mapper/model_to_remote.dart';
 import '../../data/mapper/remote_to_model.dart';
 import '../../data/remote/data_source/astro_remote_data_source.dart';
-import '../../data/remote/model/response/body/details_data/body_details_data_response.dart';
+import '../../data/remote/model/response/body/details/body_details_response.dart';
 import '../../data/remote/model/response/body/list_data/body_list_data_response.dart';
 import '../../data/remote/model/response/image_url/data/image_data_response.dart';
 import '../../domain/exception/authentication_exception.dart';
 import '../../domain/exception/generic_error_status_code_exception.dart';
 import '../../domain/exception/network_error_exception.dart';
-import '../../domain/model/body/body_details_data_model.dart';
+import '../../domain/model/body/body_details_model.dart';
 import '../../domain/model/body/body_list_data_model.dart';
 import '../../domain/model/body/body_model.dart';
 import '../../domain/model/image_url/image_data_model.dart';
@@ -29,7 +29,7 @@ class AstroRemoteDataSourceImpl implements AstroRemoteDataSource {
   final String encodedHash = base64Encode(utf8.encode(ConstantsUrlApi.hash));
 
   @override
-  Future<BodyDetailsDataModel> getBodyDetailsDataModel(
+  Future<BodyDetailsModel> getBodyDetailsModel(
       BodyModel bodyModel, String bodyId) async {
     _dio.options.headers['authorization'] = 'Basic $encodedHash';
     final bodyRequest = bodyModel.toBodyRequest();
@@ -39,12 +39,13 @@ class AstroRemoteDataSourceImpl implements AstroRemoteDataSource {
           queryParameters: {
             'latitude': bodyRequest.latitude,
             'longitude': bodyRequest.longitude,
-            'fromDate': bodyRequest.fromDate,
-            'toDate': bodyRequest.toDate,
-            'time': bodyRequest.time
+            'from_date': bodyRequest.fromDate,
+            'to_date': bodyRequest.toDate,
+            'time': bodyRequest.time,
+            'elevation': bodyRequest.elevation
           });
-      final bodyDetailsData = BodyDetailsDataResponse.fromJson(response.data);
-      return bodyDetailsData.toBodyDetailsDataModel();
+      final bodyDetails = BodyDetailsResponse.fromJson(response.data);
+      return bodyDetails.toBodyDetailsModel();
     } on DioError catch (dioError, _) {
       throw _getException(dioError);
     }

@@ -9,14 +9,14 @@ part of 'body_distance_response.dart';
 BodyDistanceResponse _$BodyDistanceResponseFromJson(
         Map<String, dynamic> json) =>
     BodyDistanceResponse(
-      fromEarth: json['from_earth'] == null
+      fromEarth: json['fromEarth'] == null
           ? null
           : BodyDistanceFromEarthResponse.fromJson(
-              json['from_earth'] as Map<String, dynamic>),
+              json['fromEarth'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$BodyDistanceResponseToJson(
         BodyDistanceResponse instance) =>
     <String, dynamic>{
-      'from_earth': instance.fromEarth,
+      'fromEarth': instance.fromEarth,
     };

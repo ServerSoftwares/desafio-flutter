@@ -17,6 +17,7 @@ extension BodyModelToBodyRequest on BodyModel {
         fromDate: fromDate,
         toDate: toDate,
         time: time,
+        elevation: elevation,
       );
 }
 

@@ -13,6 +13,7 @@ class BodyDistanceResponse {
   factory BodyDistanceResponse.fromJson(Map<String, dynamic> json) =>
       _$BodyDistanceResponseFromJson(json);
 
+  @JsonKey(name: 'fromEarth')
   final BodyDistanceFromEarthResponse? fromEarth;
 
   Map<String, dynamic> toJson() => _$BodyDistanceResponseToJson(this);
