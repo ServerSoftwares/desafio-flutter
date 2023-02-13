@@ -26,14 +26,16 @@ class CelestialBodyPageController
   List<String>? bodyList;
   String? selectedBody;
   List<BodyTableRowsModel>? rows;
+  bool hasLoadedList = false;
 
   Future<void> getBodyList() async {
+    value = CelestialBodyPageState.loading;
     try {
       final bodyListData = await _getBodyListUseCase.getBodyList();
       value = CelestialBodyPageState.listSuccess;
       bodyList = bodyListData.data.bodies;
       selectedBody = bodyList!.first;
-      print(bodyList);
+      hasLoadedList = true;
     } on GenericErrorStatusCodeException {
       value = CelestialBodyPageState.genericError;
     } on NetworkErrorException {
@@ -53,7 +55,7 @@ class CelestialBodyPageController
     value = CelestialBodyPageState.loading;
     
     final toDate = DateTime.now();
-    final fromDate = toDate.subtract(const Duration(days: 1));
+    final fromDate = toDate.subtract(const Duration(days: 7));
     final time = DateFormat.Hms().format(toDate);
 
     final bodyModel = BodyModel(

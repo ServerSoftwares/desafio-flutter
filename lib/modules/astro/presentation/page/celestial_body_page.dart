@@ -54,6 +54,18 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
     controller.getBodyList();
   }
 
+  Future<void> reload() async {
+    if (!controller.hasLoadedList) {
+      await controller.getBodyList();
+    } else {
+      await controller.getBodyDetailsModel(
+        bodyId: controller.selectedBody!,
+        latitude: widget.latitude,
+        longitude: widget.longitude,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -66,53 +78,58 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Selecione um corpo celeste:',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 10),
               ValueListenableBuilder<CelestialBodyPageState>(
                 valueListenable: controller,
                 builder: (context, state, _) {
                   if (state == CelestialBodyPageState.listSuccess ||
                       state == CelestialBodyPageState.detailsSuccess) {
-                    return Center(
-                      child: DropdownButton<String>(
-                        value: controller.selectedBody,
-                        items: controller.bodyList!
-                            .map(
-                              (body) => DropdownMenuItem<String>(
-                                value: body,
-                                child: Text(
-                                  body.capitalize(),
-                                  style: const TextStyle(
-                                    fontSize: 18,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Selecione um corpo celeste:',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Center(
+                          child: DropdownButton<String>(
+                            value: controller.selectedBody,
+                            items: controller.bodyList!
+                                .map(
+                                  (body) => DropdownMenuItem<String>(
+                                    value: body,
+                                    child: Text(
+                                      body.capitalize(),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (selectedBody) {
-                          setState(
-                              () => controller.selectedBody = selectedBody);
-                          controller.getBodyDetailsModel(
-                            bodyId: selectedBody!,
-                            latitude: widget.latitude,
-                            longitude: widget.longitude,
-                          );
-                        },
-                        underline: Container(
-                          height: 2,
-                          color: AstroConstantColors.lightGreen,
+                                )
+                                .toList(),
+                            onChanged: (selectedBody) {
+                              setState(
+                                  () => controller.selectedBody = selectedBody);
+                              controller.getBodyDetailsModel(
+                                bodyId: controller.selectedBody!,
+                                latitude: widget.latitude,
+                                longitude: widget.longitude,
+                              );
+                            },
+                            underline: Container(
+                              height: 2,
+                              color: AstroConstantColors.lightGreen,
+                            ),
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: AstroConstantColors.lightGreen,
+                              size: 35,
+                            ),
+                          ),
                         ),
-                        icon: const Icon(
-                          Icons.arrow_drop_down,
-                          color: AstroConstantColors.lightGreen,
-                          size: 35,
-                        ),
-                      ),
+                      ],
                     );
                   }
                   return const Padding(padding: EdgeInsets.zero);
@@ -131,19 +148,19 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
                       case CelestialBodyPageState.authError:
                         return CustomErrorWidget(
                           errorText: 'Ocorreu um erro!',
-                          onClickButton: () {},
+                          onClickButton: reload,
                           textColor: Colors.black87,
                         );
                       case CelestialBodyPageState.genericError:
                         return CustomErrorWidget(
                           errorText: 'Ocorreu um erro!',
-                          onClickButton: () {},
+                          onClickButton: reload,
                           textColor: Colors.black87,
                         );
                       case CelestialBodyPageState.networkError:
                         return CustomErrorWidget(
                           errorText: 'Falha na conexão!',
-                          onClickButton: () {},
+                          onClickButton: reload,
                           textColor: Colors.black87,
                         );
                       case CelestialBodyPageState.detailsSuccess:

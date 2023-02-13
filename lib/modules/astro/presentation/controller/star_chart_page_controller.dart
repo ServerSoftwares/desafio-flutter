@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:observador_app/modules/astro/domain/model/image_url/image_data_model.dart';
 
 import '../../domain/exception/authentication_exception.dart';
 import '../../domain/exception/generic_error_status_code_exception.dart';
 import '../../domain/exception/network_error_exception.dart';
+import '../../domain/model/image_url/image_data_model.dart';
 import '../../domain/model/observer/observer_model.dart';
 import '../../domain/model/star_chart/star_chart_model.dart';
 import '../../domain/model/star_chart/star_chart_view_model.dart';
@@ -45,9 +45,7 @@ class StarChartPageController extends ValueNotifier<StarChartPageState> {
       ),
     );
     try {
-      image =
-          await _getStarChartImageUseCase.getStarChartImage(starChartModel);
-      print(image!.data.imageUrl);
+      image = await _getStarChartImageUseCase.getStarChartImage(starChartModel);
       value = StarChartPageState.success;
     } on GenericErrorStatusCodeException {
       value = StarChartPageState.genericError;

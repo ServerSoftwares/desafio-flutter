@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:observador_app/modules/astro/utils/string_extensions.dart';
 
 import '../../../utils/date_time_extensions.dart';
@@ -20,8 +19,8 @@ class CustomCelestialBodyDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateTime = DateTime.parse(date);
-    final time = DateFormat.Hms().format(dateTime);
+    final dateTime = DateTime.parse(date.substring(0, 10));
+    final time = date.substring(11, 19);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +35,7 @@ class CustomCelestialBodyDetailsWidget extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Text(
-              '${dateTime.formatDate(false)} - $time',
+              '${dateTime.formatDate(false)} - $time GMT',
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

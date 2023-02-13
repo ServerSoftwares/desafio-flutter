@@ -104,6 +104,17 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
     });
   }
 
+  Future<void> reload() async {
+    if (_currentPosition == null) {
+      await _getCurrentPosition();
+    }
+    await controller.getMoonPhaseImage(
+      latitude: _currentPosition!.latitude,
+      longitude: _currentPosition!.longitude,
+      date: controller.selectedDate.formatDate(true),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -114,43 +125,53 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
             ),
           ),
         ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CustomFloatActionButton(
-              icon: Icons.sunny,
-              onClickButton: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CelestialBodyPage(
-                      latitude: _currentPosition!.latitude,
-                      longitude: _currentPosition!.longitude,
-                    ),
+        floatingActionButton: ValueListenableBuilder<MoonPhasePageState>(
+          valueListenable: controller,
+          builder: (context, state, _) {
+            if (state == MoonPhasePageState.success &&
+                _currentPosition != null) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomFloatActionButton(
+                    icon: Icons.sunny,
+                    onClickButton: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CelestialBodyPage(
+                            latitude: _currentPosition!.latitude,
+                            longitude: _currentPosition!.longitude,
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-            CustomFloatActionButton(
-              icon: Icons.star,
-              onClickButton: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => StarChartPage(
-                      latitude: _currentPosition!.latitude,
-                      longitude: _currentPosition!.longitude,
-                    ),
+                  CustomFloatActionButton(
+                    icon: Icons.star,
+                    onClickButton: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StarChartPage(
+                            latitude: _currentPosition!.latitude,
+                            longitude: _currentPosition!.longitude,
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-            CustomFloatActionButton(
-              icon: Icons.favorite,
-              onClickButton: () {},
-            ),
-          ],
+                  CustomFloatActionButton(
+                    icon: Icons.favorite,
+                    onClickButton: () {},
+                  ),
+                ],
+              );
+            } else {
+              return const Padding(padding: EdgeInsets.zero);
+            }
+          },
         ),
-        body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
               const Text(
@@ -207,33 +228,33 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
               ),
               const SizedBox(height: 50),
               Expanded(
-                child: SingleChildScrollView(
+                child: Center(
                   child: ValueListenableBuilder<MoonPhasePageState>(
                     valueListenable: controller,
                     builder: (context, state, _) {
                       switch (state) {
                         case MoonPhasePageState.loading:
-                          return const CircularProgressIndicator();
+                          return CircularProgressIndicator();
                         case MoonPhasePageState.authError:
                           return CustomErrorWidget(
                             errorText: 'Ocorreu um erro!',
-                            onClickButton: () {},
+                            onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case MoonPhasePageState.genericError:
                           return CustomErrorWidget(
                             errorText: 'Ocorreu um erro!',
-                            onClickButton: () {},
+                            onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case MoonPhasePageState.networkError:
                           return CustomErrorWidget(
                             errorText: 'Falha na conexão!',
-                            onClickButton: () {},
+                            onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case MoonPhasePageState.success:
-                          return Center(
+                          return SingleChildScrollView(
                             child: CustomImageLoader(
                               imageUrl: controller.image!.data.imageUrl,
                             ),

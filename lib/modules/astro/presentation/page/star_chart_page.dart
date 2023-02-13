@@ -48,6 +48,12 @@ class _StarChartPageState extends State<StarChartPage> {
     controller.selectedStarChart = controller.starChartList.first;
   }
 
+  Future<void> reload() async => controller.getStarChartImage(
+        latitude: widget.latitude,
+        longitude: widget.longitude,
+        constellation: controller.selectedStarChart!,
+      );
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -103,7 +109,7 @@ class _StarChartPageState extends State<StarChartPage> {
               ),
               const SizedBox(height: 50),
               Expanded(
-                child: SingleChildScrollView(
+                child: Center(
                   child: ValueListenableBuilder<StarChartPageState>(
                     valueListenable: controller,
                     builder: (context, state, _) {
@@ -111,48 +117,30 @@ class _StarChartPageState extends State<StarChartPage> {
                         case StarChartPageState.initState:
                           return const Padding(padding: EdgeInsets.zero);
                         case StarChartPageState.loading:
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const CircularProgressIndicator();
                         case StarChartPageState.authError:
                           return CustomErrorWidget(
                             errorText: 'Ocorreu um erro!',
-                            onClickButton: () {
-                              controller.getStarChartImage(
-                                latitude: widget.latitude,
-                                longitude: widget.longitude,
-                                constellation: controller.selectedStarChart!,
-                              );
-                            },
+                            onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case StarChartPageState.genericError:
                           return CustomErrorWidget(
                             errorText: 'Ocorreu um erro!',
-                            onClickButton: () {
-                              controller.getStarChartImage(
-                                latitude: widget.latitude,
-                                longitude: widget.longitude,
-                                constellation: controller.selectedStarChart!,
-                              );
-                            },
+                            onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case StarChartPageState.networkError:
                           return CustomErrorWidget(
                             errorText: 'Falha na conexão!',
-                            onClickButton: () {
-                              controller.getStarChartImage(
-                                latitude: widget.latitude,
-                                longitude: widget.longitude,
-                                constellation: controller.selectedStarChart!,
-                              );
-                            },
+                            onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case StarChartPageState.success:
-                          return CustomImageLoader(
-                            imageUrl: controller.image!.data.imageUrl,
+                          return SingleChildScrollView(
+                            child: CustomImageLoader(
+                              imageUrl: controller.image!.data.imageUrl,
+                            ),
                           );
                       }
                     },
