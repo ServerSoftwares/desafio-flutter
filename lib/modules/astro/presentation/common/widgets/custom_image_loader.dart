@@ -11,18 +11,23 @@ class CustomImageLoader extends StatelessWidget {
   final String imageUrl;
 
   @override
-  Widget build(BuildContext context) => FadeInImage(
-        height: 600,
-        fit: BoxFit.fitWidth,
-        alignment: Alignment.topCenter,
-        placeholderFit: BoxFit.scaleDown,
-        image: NetworkImage(imageUrl),
-        placeholder: const AssetImage(AstroConstantsImages.loadingImage),
-        imageErrorBuilder: (content, error, stackTrace) => Image.asset(
-          AstroConstantsImages.errorImage,
-          width: 100,
-          height: 180,
-          alignment: Alignment.center,
+  Widget build(BuildContext context) => InteractiveViewer(
+        panEnabled: false,
+        minScale: 1,
+        maxScale: 2,
+        child: FadeInImage(
+          height: 600,
+          fit: BoxFit.fitWidth,
+          alignment: Alignment.topCenter,
+          placeholderFit: BoxFit.scaleDown,
+          image: NetworkImage(imageUrl),
+          placeholder: const AssetImage(AstroConstantsImages.loadingImage),
+          imageErrorBuilder: (content, error, stackTrace) => Image.asset(
+            AstroConstantsImages.errorImage,
+            width: 100,
+            height: 180,
+            alignment: Alignment.center,
+          ),
         ),
       );
 }

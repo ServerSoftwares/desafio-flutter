@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:observador_app/modules/astro/presentation/page/star_chart_page.dart';
 
 import '../../constants/astro_constant_fonts.dart';
 import '../../data/remote/data_source/astro_remote_data_source.dart';
@@ -131,7 +132,16 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
             ),
             CustomFloatActionButton(
               icon: Icons.star,
-              onClickButton: () {},
+              onClickButton: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => StarChartPage(
+                      latitude: _currentPosition!.latitude,
+                      longitude: _currentPosition!.longitude,
+                    ),
+                  ),
+                );
+              },
             ),
             CustomFloatActionButton(
               icon: Icons.favorite,
@@ -139,66 +149,65 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                const Text(
-                  'Selecione uma data:',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+        body: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            children: [
+              const Text(
+                'Selecione uma data:',
+                style: TextStyle(
+                  fontSize: 18,
                 ),
-                const SizedBox(height: 10),
-                InkWell(
-                  onTap: () => DatePicker.showDatePicker(
-                    context,
-                    onConfirm: (date) async {
-                      setState(() => controller.selectedDate = date);
-                      await _getCurrentPosition();
-                      await controller.getMoonPhaseImage(
-                        latitude: _currentPosition!.latitude,
-                        longitude: _currentPosition!.longitude,
-                        date: controller.selectedDate.formatDate(true),
-                      );
-                    },
-                    maxTime: DateTime.now(),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.calendar_month_rounded,
-                        size: 30,
-                        color: AstroConstantColors.primaryColor,
-                      ),
-                      const SizedBox(width: 10),
-                      Flexible(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AstroConstantColors.lightGreen,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15),
-                            ),
+              ),
+              const SizedBox(height: 10),
+              InkWell(
+                onTap: () => DatePicker.showDatePicker(
+                  context,
+                  onConfirm: (date) async {
+                    setState(() => controller.selectedDate = date);
+                    await _getCurrentPosition();
+                    await controller.getMoonPhaseImage(
+                      latitude: _currentPosition!.latitude,
+                      longitude: _currentPosition!.longitude,
+                      date: controller.selectedDate.formatDate(true),
+                    );
+                  },
+                  maxTime: DateTime.now(),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.calendar_month_rounded,
+                      size: 30,
+                      color: AstroConstantColors.primaryColor,
+                    ),
+                    const SizedBox(width: 10),
+                    Flexible(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: AstroConstantColors.lightGreen,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
                           ),
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            controller.selectedDate.formatDate(false),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          controller.selectedDate.formatDate(false),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 50),
-                Center(
+              ),
+              const SizedBox(height: 50),
+              Expanded(
+                child: SingleChildScrollView(
                   child: ValueListenableBuilder<MoonPhasePageState>(
                     valueListenable: controller,
                     builder: (context, state, _) {
@@ -226,14 +235,15 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                         case MoonPhasePageState.success:
                           return Center(
                             child: CustomImageLoader(
-                                imageUrl: controller.image!.data.imageUrl),
+                              imageUrl: controller.image!.data.imageUrl,
+                            ),
                           );
                       }
                     },
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
