@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../data/remote/data_source/astro_remote_data_source.dart';
 import '../../data/repository/astro_repository_impl.dart';
 import '../../domain/repository/astro_repository.dart';
@@ -57,19 +58,17 @@ class _StarChartPageState extends State<StarChartPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Constelações',
+          title: Text(
+            S.of(context).starChartPageAppBarTitle,
           ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
-              const Text(
-                'Selecione uma constelação:',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
+              Text(
+                S.of(context).starChatPagePickConstellation,
+                style: const TextStyle(fontSize: 18),
               ),
               Center(
                 child: DropdownButton<String>(
@@ -80,9 +79,7 @@ class _StarChartPageState extends State<StarChartPage> {
                           value: starChart,
                           child: Text(
                             starChart.capitalize(),
-                            style: const TextStyle(
-                              fontSize: 18,
-                            ),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                       )
@@ -120,19 +117,19 @@ class _StarChartPageState extends State<StarChartPage> {
                           return const CircularProgressIndicator();
                         case StarChartPageState.authError:
                           return CustomErrorWidget(
-                            errorText: 'Ocorreu um erro!',
+                            errorText: S.of(context).genericError,
                             onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case StarChartPageState.genericError:
                           return CustomErrorWidget(
-                            errorText: 'Ocorreu um erro!',
+                            errorText: S.of(context).genericError,
                             onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case StarChartPageState.networkError:
                           return CustomErrorWidget(
-                            errorText: 'Falha na conexão!',
+                            errorText: S.of(context).failedConnection,
                             onClickButton: reload,
                             textColor: Colors.black87,
                           );

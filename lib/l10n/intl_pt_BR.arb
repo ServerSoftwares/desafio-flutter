@@ -1,1 +1,17 @@
-{}
+{
+  "@@locale": "pt_BR",
+  "moonPhasePageLocationDisabled": "Serviços de localização desabilitados. Por favor, os habilite.",
+  "moonPhasePagePermissionDenied": "Permissão de acesso à localização negada.",
+  "moonPhasePagePermissionPermanentlyDenied": "Permissão de acesso à localização permanentemente negada, não podemos solicitar solicitar perrmissão.",
+  "moonPhasePageAppBarTitle": "Observador App",
+  "moonPhasePagePickDate": "Selecione uma data:",
+  "genericError": "Ocorreu um erro!",
+  "failedConnection": "Falha de conexão!",
+  "tryAgain": "Tente Novamente",
+  "celestialBodyPageAppBarTitle": "Corpos Celestes",
+  "celestialBodyPagePickBody": "Selecione um corpo celeste:",
+  "celestialBodyPagePickBodyPosition": "Posição (graus): ",
+  "celestialBodyPagePickBodyDistance": "Distância da Terra (Km): ",
+  "starChartPageAppBarTitle": "Constelações",
+  "starChatPagePickConstellation": "Selecione uma constelação"
+}

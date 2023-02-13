@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../data/remote/data_source/astro_remote_data_source.dart';
 import '../../data/repository/astro_repository_impl.dart';
 import '../../domain/repository/astro_repository.dart';
@@ -69,9 +70,7 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Corpos Celestes',
-          ),
+          title: Text(S.of(context).celestialBodyPageAppBarTitle),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -86,11 +85,9 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Selecione um corpo celeste:',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                        Text(
+                          S.of(context).celestialBodyPagePickBody,
+                          style: const TextStyle(fontSize: 18),
                         ),
                         const SizedBox(height: 10),
                         Center(
@@ -102,9 +99,7 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
                                     value: body,
                                     child: Text(
                                       body.capitalize(),
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                      ),
+                                      style: const TextStyle(fontSize: 18),
                                     ),
                                   ),
                                 )
@@ -147,19 +142,19 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
                         );
                       case CelestialBodyPageState.authError:
                         return CustomErrorWidget(
-                          errorText: 'Ocorreu um erro!',
+                          errorText: S.of(context).genericError,
                           onClickButton: reload,
                           textColor: Colors.black87,
                         );
                       case CelestialBodyPageState.genericError:
                         return CustomErrorWidget(
-                          errorText: 'Ocorreu um erro!',
+                          errorText: S.of(context).genericError,
                           onClickButton: reload,
                           textColor: Colors.black87,
                         );
                       case CelestialBodyPageState.networkError:
                         return CustomErrorWidget(
-                          errorText: 'Falha na conexão!',
+                          errorText: S.of(context).failedConnection,
                           onClickButton: reload,
                           textColor: Colors.black87,
                         );

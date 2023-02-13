@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../generated/l10n.dart';
 import '../constants/astro_constant_colors.dart';
 
 class CustomErrorWidget extends StatelessWidget {
@@ -41,9 +42,9 @@ class CustomErrorWidget extends StatelessWidget {
                     Radius.circular(15),
                   ),
                 ),
-                child: const Text(
-                  'Tentar Novamente',
-                  style: TextStyle(
+                child: Text(
+                  S.of(context).tryAgain,
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                   ),

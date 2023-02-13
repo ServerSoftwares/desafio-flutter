@@ -2,9 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:observador_app/modules/astro/presentation/page/star_chart_page.dart';
 
-import '../../constants/astro_constant_fonts.dart';
+import '../../../../generated/l10n.dart';
 import '../../data/remote/data_source/astro_remote_data_source.dart';
 import '../../data/repository/astro_repository_impl.dart';
 import '../../domain/repository/astro_repository.dart';
@@ -18,6 +17,7 @@ import '../common/widgets/custom_image_loader.dart';
 import '../controller/moon_phase_page_controller.dart';
 import 'celestial_body_page.dart';
 import 'moon_phase_page_state.dart';
+import 'star_chart_page.dart';
 
 class MoonPhasePage extends StatefulWidget {
   const MoonPhasePage({Key? key}) : super(key: key);
@@ -61,9 +61,8 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services'),
+        SnackBar(
+          content: Text(S.of(context).moonPhasePageLocationDisabled),
         ),
       );
       return false;
@@ -73,15 +72,17 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+          SnackBar(
+            content: Text(S.of(context).moonPhasePagePermissionDenied),
+          ),
+        );
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.'),
+        SnackBar(
+          content: Text(S.of(context).moonPhasePagePermissionPermanentlyDenied),
         ),
       );
       return false;
@@ -118,12 +119,7 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Observador App',
-            style: TextStyle(
-              fontFamily: AstroConstantFonts.roboto,
-            ),
-          ),
+          title: Text(S.of(context).moonPhasePageAppBarTitle),
         ),
         floatingActionButton: ValueListenableBuilder<MoonPhasePageState>(
           valueListenable: controller,
@@ -174,9 +170,9 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
-              const Text(
-                'Selecione uma data:',
-                style: TextStyle(
+              Text(
+                S.of(context).moonPhasePagePickDate,
+                style: const TextStyle(
                   fontSize: 18,
                 ),
               ),
@@ -187,11 +183,13 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                   onConfirm: (date) async {
                     setState(() => controller.selectedDate = date);
                     await _getCurrentPosition();
-                    await controller.getMoonPhaseImage(
-                      latitude: _currentPosition!.latitude,
-                      longitude: _currentPosition!.longitude,
-                      date: controller.selectedDate.formatDate(true),
-                    );
+                    if (_currentPosition != null) {
+                      await controller.getMoonPhaseImage(
+                        latitude: _currentPosition!.latitude,
+                        longitude: _currentPosition!.longitude,
+                        date: controller.selectedDate.formatDate(true),
+                      );
+                    }
                   },
                   maxTime: DateTime.now(),
                 ),
@@ -234,22 +232,22 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                     builder: (context, state, _) {
                       switch (state) {
                         case MoonPhasePageState.loading:
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         case MoonPhasePageState.authError:
                           return CustomErrorWidget(
-                            errorText: 'Ocorreu um erro!',
+                            errorText: S.of(context).genericError,
                             onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case MoonPhasePageState.genericError:
                           return CustomErrorWidget(
-                            errorText: 'Ocorreu um erro!',
+                            errorText: S.of(context).genericError,
                             onClickButton: reload,
                             textColor: Colors.black87,
                           );
                         case MoonPhasePageState.networkError:
                           return CustomErrorWidget(
-                            errorText: 'Falha na conexão!',
+                            errorText: S.of(context).failedConnection,
                             onClickButton: reload,
                             textColor: Colors.black87,
                           );

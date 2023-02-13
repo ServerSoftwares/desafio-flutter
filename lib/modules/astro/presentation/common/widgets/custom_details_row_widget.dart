@@ -20,7 +20,7 @@ class CustomDetailsRowWidget extends StatelessWidget {
               label,
               style: const TextStyle(
                 color: AstroConstantColors.secondaryColor,
-                fontSize: 16,
+                fontSize: 15,
               ),
             ),
           ),
@@ -28,7 +28,7 @@ class CustomDetailsRowWidget extends StatelessWidget {
             child: Text(
               detail,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 15,
               ),
             ),
           ),

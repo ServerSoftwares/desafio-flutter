@@ -49,6 +49,146 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Serviços de localização desabilitados. Por favor, os habilite.`
+  String get moonPhasePageLocationDisabled {
+    return Intl.message(
+      'Serviços de localização desabilitados. Por favor, os habilite.',
+      name: 'moonPhasePageLocationDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permissão de acesso à localização negada.`
+  String get moonPhasePagePermissionDenied {
+    return Intl.message(
+      'Permissão de acesso à localização negada.',
+      name: 'moonPhasePagePermissionDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permissão de acesso à localização permanentemente negada, não podemos solicitar solicitar perrmissão.`
+  String get moonPhasePagePermissionPermanentlyDenied {
+    return Intl.message(
+      'Permissão de acesso à localização permanentemente negada, não podemos solicitar solicitar perrmissão.',
+      name: 'moonPhasePagePermissionPermanentlyDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Observador App`
+  String get moonPhasePageAppBarTitle {
+    return Intl.message(
+      'Observador App',
+      name: 'moonPhasePageAppBarTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selecione uma data:`
+  String get moonPhasePagePickDate {
+    return Intl.message(
+      'Selecione uma data:',
+      name: 'moonPhasePagePickDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ocorreu um erro!`
+  String get genericError {
+    return Intl.message(
+      'Ocorreu um erro!',
+      name: 'genericError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Falha de conexão!`
+  String get failedConnection {
+    return Intl.message(
+      'Falha de conexão!',
+      name: 'failedConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tente Novamente`
+  String get tryAgain {
+    return Intl.message(
+      'Tente Novamente',
+      name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Corpos Celestes`
+  String get celestialBodyPageAppBarTitle {
+    return Intl.message(
+      'Corpos Celestes',
+      name: 'celestialBodyPageAppBarTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selecione um corpo celeste:`
+  String get celestialBodyPagePickBody {
+    return Intl.message(
+      'Selecione um corpo celeste:',
+      name: 'celestialBodyPagePickBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Posição (graus): `
+  String get celestialBodyPagePickBodyPosition {
+    return Intl.message(
+      'Posição (graus): ',
+      name: 'celestialBodyPagePickBodyPosition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distância da Terra (Km): `
+  String get celestialBodyPagePickBodyDistance {
+    return Intl.message(
+      'Distância da Terra (Km): ',
+      name: 'celestialBodyPagePickBodyDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Constelações`
+  String get starChartPageAppBarTitle {
+    return Intl.message(
+      'Constelações',
+      name: 'starChartPageAppBarTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selecione uma constelação`
+  String get starChatPagePickConstellation {
+    return Intl.message(
+      'Selecione uma constelação',
+      name: 'starChatPagePickConstellation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -57,6 +197,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'pt', countryCode: 'BR'),
+      Locale.fromSubtags(languageCode: 'en', countryCode: 'US'),
     ];
   }
 

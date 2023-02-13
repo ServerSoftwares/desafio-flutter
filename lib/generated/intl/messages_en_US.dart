@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a pt_BR locale. All the
+// This is a library that provides messages for a en_US locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,37 +18,37 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'pt_BR';
+  String get localeName => 'en_US';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "celestialBodyPageAppBarTitle":
-            MessageLookupByLibrary.simpleMessage("Corpos Celestes"),
+            MessageLookupByLibrary.simpleMessage("Celestial Bodies"),
         "celestialBodyPagePickBody":
-            MessageLookupByLibrary.simpleMessage("Selecione um corpo celeste:"),
+            MessageLookupByLibrary.simpleMessage("Pick a body:"),
         "celestialBodyPagePickBodyDistance":
-            MessageLookupByLibrary.simpleMessage("Distância da Terra (Km): "),
+            MessageLookupByLibrary.simpleMessage("Distance from Earth (Km): "),
         "celestialBodyPagePickBodyPosition":
-            MessageLookupByLibrary.simpleMessage("Posição (graus): "),
+            MessageLookupByLibrary.simpleMessage("Position (degrees): "),
         "failedConnection":
-            MessageLookupByLibrary.simpleMessage("Falha de conexão!"),
+            MessageLookupByLibrary.simpleMessage("Connection failed!"),
         "genericError":
-            MessageLookupByLibrary.simpleMessage("Ocorreu um erro!"),
+            MessageLookupByLibrary.simpleMessage("An error has occurred!"),
         "moonPhasePageAppBarTitle":
-            MessageLookupByLibrary.simpleMessage("Observador App"),
+            MessageLookupByLibrary.simpleMessage("Observer App"),
         "moonPhasePageLocationDisabled": MessageLookupByLibrary.simpleMessage(
-            "Serviços de localização desabilitados. Por favor, os habilite."),
+            "Location services are disabled. Please enable the services"),
         "moonPhasePagePermissionDenied": MessageLookupByLibrary.simpleMessage(
-            "Permissão de acesso à localização negada."),
+            "Location permissions are denied"),
         "moonPhasePagePermissionPermanentlyDenied":
             MessageLookupByLibrary.simpleMessage(
-                "Permissão de acesso à localização permanentemente negada, não podemos solicitar solicitar perrmissão."),
+                "Location permissions are permanently denied, we cannot request permissions."),
         "moonPhasePagePickDate":
-            MessageLookupByLibrary.simpleMessage("Selecione uma data:"),
+            MessageLookupByLibrary.simpleMessage("Pick a date:"),
         "starChartPageAppBarTitle":
-            MessageLookupByLibrary.simpleMessage("Constelações"),
+            MessageLookupByLibrary.simpleMessage("Star Chart"),
         "starChatPagePickConstellation":
-            MessageLookupByLibrary.simpleMessage("Selecione uma constelação"),
-        "tryAgain": MessageLookupByLibrary.simpleMessage("Tente Novamente")
+            MessageLookupByLibrary.simpleMessage("Pick a constellation"),
+        "tryAgain": MessageLookupByLibrary.simpleMessage("Try Again")
       };
 }

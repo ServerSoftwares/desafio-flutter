@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:observador_app/modules/astro/utils/string_extensions.dart';
 
+import '../../../../../generated/l10n.dart';
 import '../../../utils/date_time_extensions.dart';
+import '../../../utils/string_extensions.dart';
 import '../constants/astro_constant_colors.dart';
 import 'custom_details_row_widget.dart';
 
@@ -47,12 +48,12 @@ class CustomCelestialBodyDetailsWidget extends StatelessWidget {
         const SizedBox(height: 10),
         CustomDetailsRowWidget(
           detail: degrees.formatAsDouble(2),
-          label: 'Posição (graus): ',
+          label: S.of(context).celestialBodyPagePickBodyPosition,
         ),
         const SizedBox(height: 10),
         CustomDetailsRowWidget(
           detail: distance.formatAsDouble(2),
-          label: 'Distância da Terra (km): ',
+          label: S.of(context).celestialBodyPagePickBodyDistance,
         ),
         const SizedBox(height: 20),
       ],
