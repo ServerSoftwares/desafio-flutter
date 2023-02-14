@@ -1,12 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../generated/l10n.dart';
-import '../../data/remote/data_source/astro_remote_data_source.dart';
-import '../../data/repository/astro_repository_impl.dart';
-import '../../domain/repository/astro_repository.dart';
-import '../../domain/use_case/get_star_chart_image_use_case.dart';
-import '../../external/remote_data_source/astro_remote_data_source_impl.dart';
 import '../../utils/string_extensions.dart';
 import '../common/constants/astro_constant_colors.dart';
 import '../common/widgets/custom_error_widget.dart';
@@ -29,23 +24,12 @@ class StarChartPage extends StatefulWidget {
 }
 
 class _StarChartPageState extends State<StarChartPage> {
-  late Dio dio;
-  late AstroRemoteDataSource astroRemoteDataSource;
-  late AstroRepository astroRepository;
-  late GetStarChartImageUseCase getStarChartImageUseCase;
-  late StarChartPageController controller;
+  final StarChartPageController controller =
+      Modular.get<StarChartPageController>();
 
   @override
   void initState() {
     super.initState();
-    dio = Dio();
-    astroRemoteDataSource = AstroRemoteDataSourceImpl(dio: dio);
-    astroRepository =
-        AstroRepositoryImpl(astroRemoteDataSource: astroRemoteDataSource);
-    getStarChartImageUseCase =
-        GetStarChartImageUseCaseImpl(astroRepository: astroRepository);
-    controller = StarChartPageController(
-        getStarChartImageUseCase: getStarChartImageUseCase);
     controller.selectedStarChart = controller.starChartList.first;
   }
 
@@ -58,9 +42,7 @@ class _StarChartPageState extends State<StarChartPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(
-            S.of(context).starChartPageAppBarTitle,
-          ),
+          title: Text(S.of(context).starChartPageAppBarTitle),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

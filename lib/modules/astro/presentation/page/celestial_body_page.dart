@@ -1,13 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../generated/l10n.dart';
-import '../../data/remote/data_source/astro_remote_data_source.dart';
-import '../../data/repository/astro_repository_impl.dart';
-import '../../domain/repository/astro_repository.dart';
-import '../../domain/use_case/get_body_list_details_model_use_case.dart';
-import '../../domain/use_case/get_body_list_use_case.dart';
-import '../../external/remote_data_source/astro_remote_data_source_impl.dart';
 import '../../utils/string_extensions.dart';
 import '../common/constants/astro_constant_colors.dart';
 import '../common/widgets/custom_celestial_body_details_widget.dart';
@@ -30,28 +24,12 @@ class CelestialBodyPage extends StatefulWidget {
 }
 
 class _CelestialBodyPageState extends State<CelestialBodyPage> {
-  late Dio dio;
-  late AstroRemoteDataSource astroRemoteDataSource;
-  late AstroRepository astroRepository;
-  late GetBodyListUseCase getBodyListUseCase;
-  late GetBodyDetailsModelUseCase getBodyDetailsModelUseCase;
-  late CelestialBodyPageController controller;
+  final CelestialBodyPageController controller =
+      Modular.get<CelestialBodyPageController>();
 
   @override
   void initState() {
     super.initState();
-    dio = Dio();
-    astroRemoteDataSource = AstroRemoteDataSourceImpl(dio: dio);
-    astroRepository =
-        AstroRepositoryImpl(astroRemoteDataSource: astroRemoteDataSource);
-    getBodyListUseCase =
-        GetBodyListUseCaseImpl(astroRepository: astroRepository);
-    getBodyDetailsModelUseCase =
-        GetBodyDetailsModelUseCaseImpl(astroRepository: astroRepository);
-    controller = CelestialBodyPageController(
-      getBodyListUseCase: getBodyListUseCase,
-      getBodyDetailsModelUseCase: getBodyDetailsModelUseCase,
-    );
     controller.getBodyList();
   }
 

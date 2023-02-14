@@ -1,23 +1,17 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../../generated/l10n.dart';
-import '../../data/remote/data_source/astro_remote_data_source.dart';
-import '../../data/repository/astro_repository_impl.dart';
-import '../../domain/repository/astro_repository.dart';
-import '../../domain/use_case/get_moon_phase_image_use_case.dart';
-import '../../external/remote_data_source/astro_remote_data_source_impl.dart';
+import '../../constants/astro_constant_routes.dart';
 import '../../utils/date_time_extensions.dart';
 import '../common/constants/astro_constant_colors.dart';
 import '../common/widgets/custom_error_widget.dart';
 import '../common/widgets/custom_float_action_button.dart';
 import '../common/widgets/custom_image_loader.dart';
 import '../controller/moon_phase_page_controller.dart';
-import 'celestial_body_page.dart';
 import 'moon_phase_page_state.dart';
-import 'star_chart_page.dart';
 
 class MoonPhasePage extends StatefulWidget {
   const MoonPhasePage({Key? key}) : super(key: key);
@@ -27,24 +21,13 @@ class MoonPhasePage extends StatefulWidget {
 }
 
 class _MoonPhasePageState extends State<MoonPhasePage> {
-  late Dio dio;
-  late AstroRemoteDataSource astroRemoteDataSource;
-  late AstroRepository astroRepository;
-  late GetMoonPhaseImageUseCase getMoonPhaseImageUseCase;
-  late MoonPhasePageController controller;
+  final MoonPhasePageController controller =
+      Modular.get<MoonPhasePageController>();
   Position? _currentPosition;
 
   @override
   void initState() {
     super.initState();
-    dio = Dio();
-    astroRemoteDataSource = AstroRemoteDataSourceImpl(dio: dio);
-    astroRepository =
-        AstroRepositoryImpl(astroRemoteDataSource: astroRemoteDataSource);
-    getMoonPhaseImageUseCase =
-        GetMoonPhaseImageUseCaseImpl(astroRepository: astroRepository);
-    controller = MoonPhasePageController(
-        getMoonPhaseImageUseCase: getMoonPhaseImageUseCase);
     _getCurrentPosition().then(
       (value) async => controller.getMoonPhaseImage(
         latitude: _currentPosition!.latitude,
@@ -131,29 +114,21 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                 children: [
                   CustomFloatActionButton(
                     icon: Icons.sunny,
-                    onClickButton: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CelestialBodyPage(
-                            latitude: _currentPosition!.latitude,
-                            longitude: _currentPosition!.longitude,
-                          ),
-                        ),
-                      );
-                    },
+                    onClickButton: () => Modular.to.pushNamed(
+                        AstroConstantRoutes.celestialBodiesPage,
+                        arguments: [
+                          _currentPosition!.latitude,
+                          _currentPosition!.longitude,
+                        ]),
                   ),
                   CustomFloatActionButton(
                     icon: Icons.star,
-                    onClickButton: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => StarChartPage(
-                            latitude: _currentPosition!.latitude,
-                            longitude: _currentPosition!.longitude,
-                          ),
-                        ),
-                      );
-                    },
+                    onClickButton: () => Modular.to.pushNamed(
+                        AstroConstantRoutes.celestialBodiesPage,
+                        arguments: [
+                          _currentPosition!.latitude,
+                          _currentPosition!.longitude,
+                        ]),
                   ),
                   CustomFloatActionButton(
                     icon: Icons.favorite,
