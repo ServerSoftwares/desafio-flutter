@@ -36,7 +36,7 @@ class CustomCelestialBodyDetailsWidget extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Text(
-              '${dateTime.formatDate(false)} - $time GMT',
+              '${dateTime.formatDate(false)} - $time',
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

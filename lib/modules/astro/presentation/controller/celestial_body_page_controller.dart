@@ -55,7 +55,7 @@ class CelestialBodyPageController
     value = CelestialBodyPageState.loading;
     
     final toDate = DateTime.now();
-    final fromDate = toDate.subtract(const Duration(days: 7));
+    final fromDate = toDate.subtract(const Duration(days: 6));
     final time = DateFormat.Hms().format(toDate);
 
     final bodyModel = BodyModel(
