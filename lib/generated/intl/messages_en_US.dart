@@ -30,21 +30,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Distance from Earth (Km): "),
         "celestialBodyPagePickBodyPosition":
             MessageLookupByLibrary.simpleMessage("Position (degrees): "),
+        "emptyList": MessageLookupByLibrary.simpleMessage("No body available!"),
         "failedConnection":
             MessageLookupByLibrary.simpleMessage("Connection failed!"),
         "genericError":
             MessageLookupByLibrary.simpleMessage("An error has occurred!"),
         "moonPhasePageAppBarTitle":
             MessageLookupByLibrary.simpleMessage("Observer App"),
-        "moonPhasePageLocationDisabled": MessageLookupByLibrary.simpleMessage(
-            "Location services are disabled. Please enable the services"),
-        "moonPhasePagePermissionDenied": MessageLookupByLibrary.simpleMessage(
-            "Location permissions are denied"),
-        "moonPhasePagePermissionPermanentlyDenied":
-            MessageLookupByLibrary.simpleMessage(
-                "Location permissions are permanently denied, we cannot request permissions."),
         "moonPhasePagePickDate":
             MessageLookupByLibrary.simpleMessage("Pick a date:"),
+        "positionError": MessageLookupByLibrary.simpleMessage(
+            "Permission to access location failed!"),
         "starChartPageAppBarTitle":
             MessageLookupByLibrary.simpleMessage("Star Chart"),
         "starChatPagePickConstellation":

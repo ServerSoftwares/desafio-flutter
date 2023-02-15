@@ -4,5 +4,6 @@ enum CelestialBodyPageState {
   genericError,
   networkError,
   listSuccess,
+  listEmpty,
   detailsSuccess,
 }

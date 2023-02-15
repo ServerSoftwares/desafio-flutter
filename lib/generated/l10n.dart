@@ -50,36 +50,6 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Serviços de localização desabilitados. Por favor, os habilite.`
-  String get moonPhasePageLocationDisabled {
-    return Intl.message(
-      'Serviços de localização desabilitados. Por favor, os habilite.',
-      name: 'moonPhasePageLocationDisabled',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Permissão de acesso à localização negada.`
-  String get moonPhasePagePermissionDenied {
-    return Intl.message(
-      'Permissão de acesso à localização negada.',
-      name: 'moonPhasePagePermissionDenied',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Permissão de acesso à localização permanentemente negada, não podemos solicitar solicitar perrmissão.`
-  String get moonPhasePagePermissionPermanentlyDenied {
-    return Intl.message(
-      'Permissão de acesso à localização permanentemente negada, não podemos solicitar solicitar perrmissão.',
-      name: 'moonPhasePagePermissionPermanentlyDenied',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Observador App`
   String get moonPhasePageAppBarTitle {
     return Intl.message(
@@ -120,11 +90,31 @@ class S {
     );
   }
 
+  /// `Nenhum corpo disponível!`
+  String get emptyList {
+    return Intl.message(
+      'Nenhum corpo disponível!',
+      name: 'emptyList',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Tente Novamente`
   String get tryAgain {
     return Intl.message(
       'Tente Novamente',
       name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Falha na permissão de acesso à localização`
+  String get positionError {
+    return Intl.message(
+      'Falha na permissão de acesso à localização',
+      name: 'positionError',
       desc: '',
       args: [],
     );

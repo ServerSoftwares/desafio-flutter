@@ -23,7 +23,8 @@ class CelestialBodyPageController
   final GetBodyListUseCase _getBodyListUseCase;
   final GetBodyDetailsModelUseCase _getBodyDetailsModelUseCase;
 
-  List<String>? bodyList;
+  List<String> availableBodyList = [];
+  List<String> displayedBodyList = [];
   String? selectedBody;
   List<BodyTableRowsModel>? rows;
   bool hasLoadedList = false;
@@ -32,9 +33,16 @@ class CelestialBodyPageController
     value = CelestialBodyPageState.loading;
     try {
       final bodyListData = await _getBodyListUseCase.getBodyList();
-      value = CelestialBodyPageState.listSuccess;
-      bodyList = bodyListData.data.bodies;
-      selectedBody = bodyList!.first;
+      availableBodyList = bodyListData.data.bodies;
+      displayedBodyList = availableBodyList
+          .where((body) => SolarSystemBodies.values.toString().contains(body))
+          .toList();
+      if (displayedBodyList.isNotEmpty) {
+        selectedBody = displayedBodyList.first;
+        value = CelestialBodyPageState.listSuccess;
+      } else {
+        value = CelestialBodyPageState.listEmpty;
+      }
       hasLoadedList = true;
     } on GenericErrorStatusCodeException {
       value = CelestialBodyPageState.genericError;
@@ -53,7 +61,7 @@ class CelestialBodyPageController
     required double longitude,
   }) async {
     value = CelestialBodyPageState.loading;
-    
+
     final toDate = DateTime.now();
     final fromDate = toDate.subtract(const Duration(days: 6));
     final time = DateFormat.Hms().format(toDate);
@@ -81,4 +89,18 @@ class CelestialBodyPageController
       value = CelestialBodyPageState.genericError;
     }
   }
+}
+
+enum SolarSystemBodies {
+  sun,
+  moon,
+  mercury,
+  venus,
+  earth,
+  mars,
+  jupiter,
+  saturn,
+  uranus,
+  neptune,
+  pluto,
 }

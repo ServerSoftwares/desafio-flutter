@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../domain/exception/authentication_exception.dart';
 import '../../domain/exception/generic_error_status_code_exception.dart';
@@ -10,47 +11,67 @@ import '../../domain/model/moon_phase/moon_phase_style_model.dart';
 import '../../domain/model/moon_phase/moon_phase_view_model.dart';
 import '../../domain/model/observer/observer_model.dart';
 import '../../domain/use_case/get_moon_phase_image_use_case.dart';
+import '../../domain/use_case/get_position_use_case.dart';
+import '../../domain/use_case/verify_if_location_permission_is_enabled_use_case.dart';
 import '../page/moon_phase_page_state.dart';
 
 class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
   MoonPhasePageController({
     required GetMoonPhaseImageUseCase getMoonPhaseImageUseCase,
+    required GetPositionUseCase getPositionUseCase,
+    required VerifyIfLocationPermissionIsEnabledUseCase
+        verifyIfLocationPermissionIsEnabledUseCase,
   })  : _getMoonPhaseImageUseCase = getMoonPhaseImageUseCase,
+        _getPositionUseCase = getPositionUseCase,
+        _verifyIfLocationPermissionIsEnabledUseCase =
+            verifyIfLocationPermissionIsEnabledUseCase,
         super(MoonPhasePageState.loading);
 
   final GetMoonPhaseImageUseCase _getMoonPhaseImageUseCase;
+  final GetPositionUseCase _getPositionUseCase;
+  final VerifyIfLocationPermissionIsEnabledUseCase
+      _verifyIfLocationPermissionIsEnabledUseCase;
 
   ImageDataModel? image;
   DateTime selectedDate = DateTime.now();
+  Position? currentPosition;
 
   Future<void> getMoonPhaseImage({
-    required double latitude,
-    required double longitude,
     required String date,
   }) async {
-    final moonPhaseModel = MoonPhaseModel(
-      format: 'png',
-      style: MoonPhaseStyleModel(
-        moonStyle: 'sketch',
-        backgroundStyle: 'stars',
-        backgroundColor: 'red',
-        headingColor: 'white',
-        textColor: 'white',
-      ),
-      observer: ObserverModel(
-        latitude: latitude,
-        longitude: longitude,
-        date: date,
-      ),
-      view: MoonPhaseViewModel(
-        type: 'portrait-simple',
-        orientation: 'south-up',
-      ),
-    );
-    value = MoonPhasePageState.loading;
     try {
-      image = await _getMoonPhaseImageUseCase.getMoonPhaseImage(moonPhaseModel);
-      value = MoonPhasePageState.success;
+      value = MoonPhasePageState.loading;
+
+      final isAllowed =
+          await _verifyIfLocationPermissionIsEnabledUseCase.call();
+      if (isAllowed) {
+        currentPosition = await _getPositionUseCase.call();
+        final moonPhaseModel = MoonPhaseModel(
+          format: DefaultParameters.format,
+          style: MoonPhaseStyleModel(
+            moonStyle: DefaultParameters.moonStyle,
+            backgroundStyle: DefaultParameters.backgroundStyle,
+            backgroundColor: DefaultParameters.backgroundColor,
+            headingColor: DefaultParameters.headingColor,
+            textColor: DefaultParameters.textColor,
+          ),
+          observer: ObserverModel(
+            latitude: currentPosition!.latitude,
+            longitude: currentPosition!.longitude,
+            date: date,
+          ),
+          view: MoonPhaseViewModel(
+            type: DefaultParameters.type,
+            orientation: DefaultParameters.orientation,
+          ),
+        );
+        image =
+            await _getMoonPhaseImageUseCase.getMoonPhaseImage(moonPhaseModel);
+        value = MoonPhasePageState.success;
+      } else {
+        value = MoonPhasePageState.positionError;
+        return;
+      }
     } on GenericErrorStatusCodeException {
       value = MoonPhasePageState.genericError;
     } on NetworkErrorException {
@@ -61,4 +82,15 @@ class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
       value = MoonPhasePageState.genericError;
     }
   }
+}
+
+class DefaultParameters {
+  static const format = 'png';
+  static const moonStyle = 'sketch';
+  static const backgroundStyle = 'stars';
+  static const backgroundColor = 'red';
+  static const headingColor = 'white';
+  static const textColor = 'white';
+  static const type = 'portrait-simple';
+  static const orientation = 'south-up';
 }

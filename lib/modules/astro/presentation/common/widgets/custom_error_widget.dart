@@ -21,10 +21,11 @@ class CustomErrorWidget extends StatelessWidget {
         children: [
           Text(
             errorText,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: textColor,
               fontWeight: FontWeight.bold,
-              fontSize: 30,
+              fontSize: 25,
             ),
           ),
           const SizedBox(height: 10),

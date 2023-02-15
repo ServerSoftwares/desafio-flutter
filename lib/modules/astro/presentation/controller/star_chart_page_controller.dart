@@ -31,14 +31,14 @@ class StarChartPageController extends ValueNotifier<StarChartPageState> {
     value = StarChartPageState.loading;
     final date = DateTime.now().formatDate(true);
     final starChartModel = StarChartModel(
-      style: 'default',
+      style: StarChartDefaultParameters.style,
       observer: ObserverModel(
         latitude: latitude,
         longitude: longitude,
         date: date,
       ),
       view: StarChartViewModel(
-        type: 'constellation',
+        type: StarChartDefaultParameters.type,
         parameters: StarChartViewParametersModel(
           constellation: constellation.substring(0, 3),
         ),
@@ -57,4 +57,9 @@ class StarChartPageController extends ValueNotifier<StarChartPageState> {
       value = StarChartPageState.genericError;
     }
   }
+}
+
+class StarChartDefaultParameters {
+  static const style = 'default';
+  static const type = 'constellation';
 }

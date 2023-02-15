@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:geolocator/geolocator.dart';
 
 import '../../../../generated/l10n.dart';
 import '../../constants/astro_constant_routes.dart';
@@ -23,78 +22,16 @@ class MoonPhasePage extends StatefulWidget {
 class _MoonPhasePageState extends State<MoonPhasePage> {
   final MoonPhasePageController controller =
       Modular.get<MoonPhasePageController>();
-  Position? _currentPosition;
 
   @override
   void initState() {
     super.initState();
-    _getCurrentPosition().then(
-      (value) async => controller.getMoonPhaseImage(
-        latitude: _currentPosition!.latitude,
-        longitude: _currentPosition!.longitude,
-        date: DateTime.now().formatDate(true),
-      ),
-    );
-  }
-
-  Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).moonPhasePageLocationDisabled),
-        ),
-      );
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(S.of(context).moonPhasePagePermissionDenied),
-          ),
-        );
-        return false;
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).moonPhasePagePermissionPermanentlyDenied),
-        ),
-      );
-      return false;
-    }
-    return true;
-  }
-
-  Future<void> _getCurrentPosition() async {
-    controller.value = MoonPhasePageState.loading;
-    final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) {
-      return;
-    }
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((position) {
-      setState(() => _currentPosition = position);
-    }).catchError((e) {
-      controller.value = MoonPhasePageState.genericError;
-      debugPrint(e);
-    });
+    controller.getMoonPhaseImage(
+        date: controller.selectedDate.formatDate(true));
   }
 
   Future<void> reload() async {
-    if (_currentPosition == null) {
-      await _getCurrentPosition();
-    }
     await controller.getMoonPhaseImage(
-      latitude: _currentPosition!.latitude,
-      longitude: _currentPosition!.longitude,
       date: controller.selectedDate.formatDate(true),
     );
   }
@@ -107,8 +44,7 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
         floatingActionButton: ValueListenableBuilder<MoonPhasePageState>(
           valueListenable: controller,
           builder: (context, state, _) {
-            if (state == MoonPhasePageState.success &&
-                _currentPosition != null) {
+            if (state == MoonPhasePageState.success) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -117,17 +53,17 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                     onClickButton: () => Modular.to.pushNamed(
                         AstroConstantRoutes.celestialBodiesPage,
                         arguments: [
-                          _currentPosition!.latitude,
-                          _currentPosition!.longitude,
+                          controller.currentPosition!.latitude,
+                          controller.currentPosition!.longitude,
                         ]),
                   ),
                   CustomFloatActionButton(
                     icon: Icons.star,
                     onClickButton: () => Modular.to.pushNamed(
-                        AstroConstantRoutes.celestialBodiesPage,
+                        AstroConstantRoutes.starChartPage,
                         arguments: [
-                          _currentPosition!.latitude,
-                          _currentPosition!.longitude,
+                          controller.currentPosition!.latitude,
+                          controller.currentPosition!.longitude,
                         ]),
                   ),
                   CustomFloatActionButton(
@@ -157,14 +93,9 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                   context,
                   onConfirm: (date) async {
                     setState(() => controller.selectedDate = date);
-                    await _getCurrentPosition();
-                    if (_currentPosition != null) {
-                      await controller.getMoonPhaseImage(
-                        latitude: _currentPosition!.latitude,
-                        longitude: _currentPosition!.longitude,
-                        date: controller.selectedDate.formatDate(true),
-                      );
-                    }
+                    await controller.getMoonPhaseImage(
+                      date: controller.selectedDate.formatDate(true),
+                    );
                   },
                   maxTime: DateTime.now(),
                 ),
@@ -231,6 +162,12 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                             child: CustomImageLoader(
                               imageUrl: controller.image!.data.imageUrl,
                             ),
+                          );
+                        case MoonPhasePageState.positionError:
+                          return CustomErrorWidget(
+                            errorText: S.of(context).positionError,
+                            onClickButton: reload,
+                            textColor: Colors.black87,
                           );
                       }
                     },

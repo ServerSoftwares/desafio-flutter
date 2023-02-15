@@ -4,10 +4,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../constants/astro_constant_routes.dart';
 import '../data/remote/data_source/astro_remote_data_source.dart';
 import '../data/repository/astro_repository_impl.dart';
+import '../data/repository/geolocator_repository_impl.dart';
 import '../domain/repository/astro_repository.dart';
+import '../domain/repository/geolocator_repository.dart';
 import '../domain/use_case/get_body_list_details_model_use_case.dart';
 import '../domain/use_case/get_body_list_use_case.dart';
 import '../domain/use_case/get_moon_phase_image_use_case.dart';
+import '../domain/use_case/get_position_use_case.dart';
+import '../domain/use_case/get_star_chart_image_use_case.dart';
+import '../domain/use_case/verify_if_location_permission_is_enabled_use_case.dart';
 import '../external/remote_data_source/astro_remote_data_source_impl.dart';
 import '../presentation/controller/celestial_body_page_controller.dart';
 import '../presentation/controller/moon_phase_page_controller.dart';
@@ -26,6 +31,8 @@ class AstroModule extends Module {
         Bind.lazySingleton<AstroRepository>(
           (i) => AstroRepositoryImpl(astroRemoteDataSource: i()),
         ),
+        Bind.lazySingleton<GeolocatorRepository>(
+            (i) => GeolocatorRepositoryImpl()),
         Bind.lazySingleton<GetMoonPhaseImageUseCase>(
           (i) => GetMoonPhaseImageUseCaseImpl(astroRepository: i()),
         ),
@@ -35,8 +42,18 @@ class AstroModule extends Module {
         Bind.lazySingleton<GetBodyDetailsModelUseCase>(
           (i) => GetBodyDetailsModelUseCaseImpl(astroRepository: i()),
         ),
+        Bind.lazySingleton<GetPositionUseCase>(
+            (i) => GetPositionUseCaseImpl(geolocatorRepository: i())),
+        Bind.lazySingleton<GetStarChartImageUseCase>(
+            (i) => GetStarChartImageUseCaseImpl(astroRepository: i())),
+        Bind.lazySingleton<VerifyIfLocationPermissionIsEnabledUseCase>(
+            (i) => VerifyIfLocationPermissionIsEnabledUseCaseImpl()),
         Bind.factory<MoonPhasePageController>(
-          (i) => MoonPhasePageController(getMoonPhaseImageUseCase: i()),
+          (i) => MoonPhasePageController(
+            getMoonPhaseImageUseCase: i(),
+            getPositionUseCase: i(),
+            verifyIfLocationPermissionIsEnabledUseCase: i(),
+          ),
         ),
         Bind.factory<CelestialBodyPageController>(
           (i) => CelestialBodyPageController(

@@ -3,5 +3,6 @@ enum MoonPhasePageState {
   authError,
   genericError,
   networkError,
+  positionError,
   success,
 }

@@ -71,7 +71,7 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
                         Center(
                           child: DropdownButton<String>(
                             value: controller.selectedBody,
-                            items: controller.bodyList!
+                            items: controller.displayedBodyList
                                 .map(
                                   (body) => DropdownMenuItem<String>(
                                     value: body,
@@ -131,6 +131,12 @@ class _CelestialBodyPageState extends State<CelestialBodyPage> {
                           textColor: Colors.black87,
                         );
                       case CelestialBodyPageState.networkError:
+                        return CustomErrorWidget(
+                          errorText: S.of(context).failedConnection,
+                          onClickButton: reload,
+                          textColor: Colors.black87,
+                        );
+                      case CelestialBodyPageState.listEmpty:
                         return CustomErrorWidget(
                           errorText: S.of(context).failedConnection,
                           onClickButton: reload,
