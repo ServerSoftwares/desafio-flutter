@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'di/app_module.dart';
 import 'generated/l10n.dart';
 import 'modules/astro/constants/astro_constant_fonts.dart';
+import 'modules/astro/domain/model/image_url/image_data_cache.dart';
+import 'modules/astro/domain/model/image_url/image_url_cache.dart';
 import 'modules/astro/presentation/common/constants/astro_constant_colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Hive
+    ..init((await getApplicationDocumentsDirectory()).path)
+    ..registerAdapter<ImageDataCache>(ImageDataCacheAdapter())
+    ..registerAdapter<ImageUrlCache>(ImageUrlCacheAdapter());
+
   runApp(
     ModularApp(
       module: AppModule(),

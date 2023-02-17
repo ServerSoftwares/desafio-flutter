@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,7 +9,7 @@ import '../../utils/date_time_extensions.dart';
 import '../common/constants/astro_constant_colors.dart';
 import '../common/widgets/custom_error_widget.dart';
 import '../common/widgets/custom_float_action_button.dart';
-import '../common/widgets/custom_image_loader.dart';
+import '../common/widgets/custom_moon_phase_image_widget.dart';
 import '../controller/moon_phase_page_controller.dart';
 import 'moon_phase_page_state.dart';
 
@@ -68,7 +69,10 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                   ),
                   CustomFloatActionButton(
                     icon: Icons.favorite,
-                    onClickButton: () {},
+                    onClickButton: () {
+                      Modular.to.pushNamed(
+                          AstroConstantRoutes.moonPhaseImageListPage);
+                    },
                   ),
                 ],
               );
@@ -130,7 +134,6 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 50),
               Expanded(
                 child: Center(
                   child: ValueListenableBuilder<MoonPhasePageState>(
@@ -159,8 +162,18 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                           );
                         case MoonPhasePageState.success:
                           return SingleChildScrollView(
-                            child: CustomImageLoader(
-                              imageUrl: controller.image!.data.imageUrl,
+                            child: ValueListenableBuilder<bool>(
+                              valueListenable: controller.isImageSaved,
+                              builder: (context, isImageSave, _) =>
+                                  CustomMoonPhaseImageWidget(
+                                imageUrl: controller.image!.data.imageUrl,
+                                icon: controller.isImageSaved.value
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                onTap: () => controller.isImageSaved.value
+                                    ? controller.deleteMoonPhaseImage()
+                                    : controller.saveMoonPhaseImage(),
+                              ),
                             ),
                           );
                         case MoonPhasePageState.positionError:

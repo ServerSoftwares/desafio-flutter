@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:observador_app/modules/astro/data/cache/astro_cache_data_source.dart';
 import 'package:observador_app/modules/astro/data/remote/data_source/astro_remote_data_source.dart';
 import 'package:observador_app/modules/astro/data/repository/astro_repository_impl.dart';
 import 'package:observador_app/modules/astro/domain/model/body/body_details_data_model.dart';
@@ -31,20 +32,22 @@ import 'package:observador_app/modules/astro/utils/date_time_extensions.dart';
 
 import 'astro_repository_repository_impl_test.mocks.dart';
 
-@GenerateMocks([AstroRemoteDataSource])
+@GenerateMocks([AstroRemoteDataSource, AstroCacheDataSource])
 void main() {
   late MockAstroRemoteDataSource mockAstroRemoteDataSource;
+  late MockAstroCacheDataSource mockAstroCacheDataSource;
   late AstroRepositoryImpl astroRepositoryImpl;
 
   setUpAll(() {
     mockAstroRemoteDataSource = MockAstroRemoteDataSource();
-    astroRepositoryImpl =
-        AstroRepositoryImpl(astroRemoteDataSource: mockAstroRemoteDataSource);
+    mockAstroCacheDataSource = MockAstroCacheDataSource();
+    astroRepositoryImpl = AstroRepositoryImpl(
+      astroRemoteDataSource: mockAstroRemoteDataSource,
+      astroCacheDataSource: mockAstroCacheDataSource,
+    );
   });
 
   setUp(() => reset(mockAstroRemoteDataSource));
-
-
 
   group('GIVEN a call on getMoonPhaseImage', () {
     test(
@@ -54,7 +57,8 @@ void main() {
           .thenAnswer((_) async => _getSuccessfulMoonPhaseImageDataModelMock());
       final imageDataModel = await astroRepositoryImpl
           .getMoonPhaseImage(_getDefaultMoonPhaseModel());
-      final imageDataModelExpected = _getSuccessfulMoonPhaseImageDataModelMock();
+      final imageDataModelExpected =
+          _getSuccessfulMoonPhaseImageDataModelMock();
       expect(imageDataModel, imageDataModelExpected);
       verify(mockAstroRemoteDataSource
               .getMoonPhaseImage(_getDefaultMoonPhaseModel()))
@@ -92,7 +96,8 @@ void main() {
           .thenAnswer((_) async => _getSuccessfulMoonPhaseImageDataModelMock());
       final imageDataModel = await mockAstroRemoteDataSource
           .getStarChartImage(_getDefaultStarChartModel());
-      final imageDataModelExpected = _getSuccessfulMoonPhaseImageDataModelMock();
+      final imageDataModelExpected =
+          _getSuccessfulMoonPhaseImageDataModelMock();
       expect(imageDataModel, imageDataModelExpected);
     });
   });
@@ -118,7 +123,8 @@ MoonPhaseModel _getDefaultMoonPhaseModel() => const MoonPhaseModel(
       ),
     );
 
-ImageDataModel _getSuccessfulMoonPhaseImageDataModelMock() => const ImageDataModel(
+ImageDataModel _getSuccessfulMoonPhaseImageDataModelMock() =>
+    const ImageDataModel(
       data: ImageModel(
         imageUrl:
             'https://widgets.astronomyapi.com/moon-phase/generated/c33f32c0a69f7e74f539afa6e9bc9cf821752cc5516ed131f432f61a1fb57c13.png',

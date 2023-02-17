@@ -179,6 +179,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Favoritos`
+  String get moonPhaseImageListPageAppBarTitle {
+    return Intl.message(
+      'Favoritos',
+      name: 'moonPhaseImageListPageAppBarTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nenhuma imagem salva nos favoritos`
+  String get moonPhaseImageListPageEmpty {
+    return Intl.message(
+      'Nenhuma imagem salva nos favoritos',
+      name: 'moonPhaseImageListPageEmpty',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

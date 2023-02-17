@@ -12,5 +12,7 @@
   "celestialBodyPagePickBodyPosition": "Position (degrees): ",
   "celestialBodyPagePickBodyDistance": "Distance from Earth (Km): ",
   "starChartPageAppBarTitle": "Star Chart",
-  "starChatPagePickConstellation": "Pick a constellation"
+  "starChatPagePickConstellation": "Pick a constellation",
+  "moonPhaseImageListPageAppBarTitle": "Favorites",
+  "moonPhaseImageListPageEmpty": "No image saved as favorite"
 }

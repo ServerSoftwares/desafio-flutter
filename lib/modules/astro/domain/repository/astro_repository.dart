@@ -16,4 +16,12 @@ abstract class AstroRepository {
   Future<ImageDataModel> getStarChartImage(StarChartModel starChartModel);
 
   Future<BodyListDataModel> getBodyList();
+
+  Future<void> saveMoonPhaseImage(ImageDataModel imageDataModel, String id);
+
+  Future<void> deleteMoonPhaseImage(String id);
+
+  Future<List<ImageDataModel>> getMoonPhaseImageList();
+
+  Future<bool> verifyIfImageIsSaved(String id);
 }

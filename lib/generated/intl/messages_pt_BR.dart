@@ -36,6 +36,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Falha de conexão!"),
         "genericError":
             MessageLookupByLibrary.simpleMessage("Ocorreu um erro!"),
+        "moonPhaseImageListPageAppBarTitle":
+            MessageLookupByLibrary.simpleMessage("Favoritos"),
+        "moonPhaseImageListPageEmpty": MessageLookupByLibrary.simpleMessage(
+            "Nenhuma imagem salva nos favoritos"),
         "moonPhasePageAppBarTitle":
             MessageLookupByLibrary.simpleMessage("Observador App"),
         "moonPhasePagePickDate":

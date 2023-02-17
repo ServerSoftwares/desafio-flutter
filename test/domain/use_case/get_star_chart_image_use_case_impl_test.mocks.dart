@@ -145,4 +145,39 @@ class MockAstroRepository extends _i1.Mock implements _i5.AstroRepository {
           ),
         )),
       ) as _i6.Future<_i4.BodyListDataModel>);
+  @override
+  _i6.Future<void> saveMoonPhaseImage(
+    _i2.ImageDataModel? imageDataModel,
+    String? id,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveMoonPhaseImage,
+          [
+            imageDataModel,
+            id,
+          ],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> deleteMoonPhaseImage(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteMoonPhaseImage,
+          [id],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<List<_i2.ImageDataModel>> getMoonPhaseImageList() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getMoonPhaseImageList,
+          [],
+        ),
+        returnValue:
+            _i6.Future<List<_i2.ImageDataModel>>.value(<_i2.ImageDataModel>[]),
+      ) as _i6.Future<List<_i2.ImageDataModel>>);
 }

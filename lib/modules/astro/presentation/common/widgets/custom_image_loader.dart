@@ -16,7 +16,6 @@ class CustomImageLoader extends StatelessWidget {
         minScale: 1,
         maxScale: 2,
         child: FadeInImage(
-          height: 600,
           fit: BoxFit.fitWidth,
           alignment: Alignment.topCenter,
           placeholderFit: BoxFit.scaleDown,

@@ -6,6 +6,8 @@
 import 'dart:async' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:observador_app/modules/astro/data/cache/astro_cache_data_source.dart'
+    as _i10;
 import 'package:observador_app/modules/astro/data/remote/data_source/astro_remote_data_source.dart'
     as _i5;
 import 'package:observador_app/modules/astro/domain/model/body/body_details_model.dart'
@@ -146,4 +148,50 @@ class MockAstroRemoteDataSource extends _i1.Mock
           ),
         )),
       ) as _i6.Future<_i4.BodyListDataModel>);
+}
+
+/// A class which mocks [AstroCacheDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAstroCacheDataSource extends _i1.Mock
+    implements _i10.AstroCacheDataSource {
+  MockAstroCacheDataSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<void> saveMoonPhaseImage(
+    _i2.ImageDataModel? imageDataModel,
+    String? id,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveMoonPhaseImage,
+          [
+            imageDataModel,
+            id,
+          ],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> deleteMoonPhaseImage(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteMoonPhaseImage,
+          [id],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+  @override
+  _i6.Future<List<_i2.ImageDataModel>> getMoonPhaseImageList() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getMoonPhaseImageList,
+          [],
+        ),
+        returnValue:
+            _i6.Future<List<_i2.ImageDataModel>>.value(<_i2.ImageDataModel>[]),
+      ) as _i6.Future<List<_i2.ImageDataModel>>);
 }

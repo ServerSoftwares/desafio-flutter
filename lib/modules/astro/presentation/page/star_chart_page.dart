@@ -86,7 +86,6 @@ class _StarChartPageState extends State<StarChartPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 50),
               Expanded(
                 child: Center(
                   child: ValueListenableBuilder<StarChartPageState>(
@@ -117,8 +116,11 @@ class _StarChartPageState extends State<StarChartPage> {
                           );
                         case StarChartPageState.success:
                           return SingleChildScrollView(
-                            child: CustomImageLoader(
-                              imageUrl: controller.image!.data.imageUrl,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: CustomImageLoader(
+                                imageUrl: controller.image!.data.imageUrl,
+                              ),
                             ),
                           );
                       }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -10,9 +9,13 @@ import '../../domain/model/moon_phase/moon_phase_model.dart';
 import '../../domain/model/moon_phase/moon_phase_style_model.dart';
 import '../../domain/model/moon_phase/moon_phase_view_model.dart';
 import '../../domain/model/observer/observer_model.dart';
+import '../../domain/use_case/delete_moon_phase_image_use_case.dart';
 import '../../domain/use_case/get_moon_phase_image_use_case.dart';
 import '../../domain/use_case/get_position_use_case.dart';
+import '../../domain/use_case/save_moon_phase_image_use_case.dart';
+import '../../domain/use_case/verify_if_image_is_saved_use_case.dart';
 import '../../domain/use_case/verify_if_location_permission_is_enabled_use_case.dart';
+import '../../utils/date_time_extensions.dart';
 import '../page/moon_phase_page_state.dart';
 
 class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
@@ -21,20 +24,30 @@ class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
     required GetPositionUseCase getPositionUseCase,
     required VerifyIfLocationPermissionIsEnabledUseCase
         verifyIfLocationPermissionIsEnabledUseCase,
+    required SaveMoonPhaseImageUseCase saveMoonPhaseImageUseCase,
+    required DeleteMoonPhaseImageUseCase deleteMoonPhaseImageUseCase,
+    required VerifyIfImageIsSavedUseCase verifyIfImageIsSavedUseCase,
   })  : _getMoonPhaseImageUseCase = getMoonPhaseImageUseCase,
         _getPositionUseCase = getPositionUseCase,
         _verifyIfLocationPermissionIsEnabledUseCase =
             verifyIfLocationPermissionIsEnabledUseCase,
+        _saveMoonPhaseImageUseCase = saveMoonPhaseImageUseCase,
+        _deleteMoonPhaseImageUseCase = deleteMoonPhaseImageUseCase,
+        _verifyIfImageIsSavedUseCase = verifyIfImageIsSavedUseCase,
         super(MoonPhasePageState.loading);
 
   final GetMoonPhaseImageUseCase _getMoonPhaseImageUseCase;
   final GetPositionUseCase _getPositionUseCase;
   final VerifyIfLocationPermissionIsEnabledUseCase
       _verifyIfLocationPermissionIsEnabledUseCase;
+  final SaveMoonPhaseImageUseCase _saveMoonPhaseImageUseCase;
+  final DeleteMoonPhaseImageUseCase _deleteMoonPhaseImageUseCase;
+  final VerifyIfImageIsSavedUseCase _verifyIfImageIsSavedUseCase;
 
   ImageDataModel? image;
   DateTime selectedDate = DateTime.now();
   Position? currentPosition;
+  ValueNotifier<bool> isImageSaved = ValueNotifier<bool>(false);
 
   Future<void> getMoonPhaseImage({
     required String date,
@@ -65,8 +78,8 @@ class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
             orientation: DefaultParameters.orientation,
           ),
         );
-        image =
-            await _getMoonPhaseImageUseCase.call(moonPhaseModel);
+        image = await _getMoonPhaseImageUseCase.call(moonPhaseModel);
+        await verifyIfImageIsSaved();
         value = MoonPhasePageState.success;
       } else {
         value = MoonPhasePageState.positionError;
@@ -81,6 +94,22 @@ class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
     } catch (e) {
       value = MoonPhasePageState.genericError;
     }
+  }
+
+  Future<void> verifyIfImageIsSaved() async {
+    isImageSaved.value =
+        await _verifyIfImageIsSavedUseCase.call(selectedDate.formatDate(true));
+  }
+
+  Future<void> saveMoonPhaseImage() async {
+    await _saveMoonPhaseImageUseCase.call(
+        image!, selectedDate.formatDate(true));
+    await verifyIfImageIsSaved();
+  }
+
+  Future<void> deleteMoonPhaseImage() async {
+    await _deleteMoonPhaseImageUseCase.call(selectedDate.formatDate(true));
+    await verifyIfImageIsSaved();
   }
 }
 
