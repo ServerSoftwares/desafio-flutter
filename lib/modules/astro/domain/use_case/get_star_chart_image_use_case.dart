@@ -3,7 +3,7 @@ import '../model/star_chart/star_chart_model.dart';
 import '../repository/astro_repository.dart';
 
 mixin GetStarChartImageUseCase {
-  Future<ImageDataModel> getStarChartImage(StarChartModel starChartModel);
+  Future<ImageDataModel> call(StarChartModel starChartModel);
 }
 
 class GetStarChartImageUseCaseImpl implements GetStarChartImageUseCase {
@@ -14,6 +14,6 @@ class GetStarChartImageUseCaseImpl implements GetStarChartImageUseCase {
   final AstroRepository _astroRepository;
 
   @override
-  Future<ImageDataModel> getStarChartImage(StarChartModel starChartModel) =>
+  Future<ImageDataModel> call(StarChartModel starChartModel) =>
       _astroRepository.getStarChartImage(starChartModel);
 }

@@ -48,7 +48,7 @@ class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
         currentPosition = await _getPositionUseCase.call();
         final moonPhaseModel = MoonPhaseModel(
           format: DefaultParameters.format,
-          style: MoonPhaseStyleModel(
+          style: const MoonPhaseStyleModel(
             moonStyle: DefaultParameters.moonStyle,
             backgroundStyle: DefaultParameters.backgroundStyle,
             backgroundColor: DefaultParameters.backgroundColor,
@@ -60,13 +60,13 @@ class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
             longitude: currentPosition!.longitude,
             date: date,
           ),
-          view: MoonPhaseViewModel(
+          view: const MoonPhaseViewModel(
             type: DefaultParameters.type,
             orientation: DefaultParameters.orientation,
           ),
         );
         image =
-            await _getMoonPhaseImageUseCase.getMoonPhaseImage(moonPhaseModel);
+            await _getMoonPhaseImageUseCase.call(moonPhaseModel);
         value = MoonPhasePageState.success;
       } else {
         value = MoonPhasePageState.positionError;

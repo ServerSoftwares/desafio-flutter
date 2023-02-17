@@ -3,7 +3,7 @@ import '../model/moon_phase/moon_phase_model.dart';
 import '../repository/astro_repository.dart';
 
 mixin GetMoonPhaseImageUseCase {
-  Future<ImageDataModel> getMoonPhaseImage(MoonPhaseModel moonPhaseModel);
+  Future<ImageDataModel> call(MoonPhaseModel moonPhaseModel);
 }
 
 class GetMoonPhaseImageUseCaseImpl implements GetMoonPhaseImageUseCase {
@@ -14,6 +14,6 @@ class GetMoonPhaseImageUseCaseImpl implements GetMoonPhaseImageUseCase {
   final AstroRepository _astroRepository;
 
   @override
-  Future<ImageDataModel> getMoonPhaseImage(MoonPhaseModel moonPhaseModel) =>
+  Future<ImageDataModel> call(MoonPhaseModel moonPhaseModel) =>
       _astroRepository.getMoonPhaseImage(moonPhaseModel);
 }

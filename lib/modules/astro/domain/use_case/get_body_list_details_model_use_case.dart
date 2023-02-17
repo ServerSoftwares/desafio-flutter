@@ -3,7 +3,7 @@ import '../model/body/body_model.dart';
 import '../repository/astro_repository.dart';
 
 mixin GetBodyDetailsModelUseCase {
-  Future<BodyDetailsModel> getBodyDetailsModel(
+  Future<BodyDetailsModel> call(
     BodyModel bodyModel,
     String bodyId,
   );
@@ -17,7 +17,7 @@ class GetBodyDetailsModelUseCaseImpl implements GetBodyDetailsModelUseCase {
   final AstroRepository _astroRepository;
 
   @override
-  Future<BodyDetailsModel> getBodyDetailsModel(
+  Future<BodyDetailsModel> call(
           BodyModel bodyModel, String bodyId) =>
       _astroRepository.getBodyDetailsModel(bodyModel, bodyId);
 }

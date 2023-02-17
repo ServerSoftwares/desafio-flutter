@@ -32,7 +32,7 @@ class CelestialBodyPageController
   Future<void> getBodyList() async {
     value = CelestialBodyPageState.loading;
     try {
-      final bodyListData = await _getBodyListUseCase.getBodyList();
+      final bodyListData = await _getBodyListUseCase.call();
       availableBodyList = bodyListData.data.bodies;
       displayedBodyList = availableBodyList
           .where((body) => SolarSystemBodies.values.toString().contains(body))
@@ -75,7 +75,7 @@ class CelestialBodyPageController
       elevation: 0,
     );
     try {
-      final bodyDetails = await _getBodyDetailsModelUseCase.getBodyDetailsModel(
+      final bodyDetails = await _getBodyDetailsModelUseCase.call(
           bodyModel, bodyId);
       rows = bodyDetails.data.table.rows;
       value = CelestialBodyPageState.detailsSuccess;

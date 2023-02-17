@@ -2,7 +2,7 @@ import '../model/body/body_list_data_model.dart';
 import '../repository/astro_repository.dart';
 
 mixin GetBodyListUseCase {
-  Future<BodyListDataModel> getBodyList();
+  Future<BodyListDataModel> call();
 }
 
 class GetBodyListUseCaseImpl implements GetBodyListUseCase {
@@ -13,5 +13,5 @@ class GetBodyListUseCaseImpl implements GetBodyListUseCase {
   final AstroRepository _astroRepository;
 
   @override
-  Future<BodyListDataModel> getBodyList() => _astroRepository.getBodyList();
+  Future<BodyListDataModel> call() => _astroRepository.getBodyList();
 }

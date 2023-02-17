@@ -45,7 +45,7 @@ class StarChartPageController extends ValueNotifier<StarChartPageState> {
       ),
     );
     try {
-      image = await _getStarChartImageUseCase.getStarChartImage(starChartModel);
+      image = await _getStarChartImageUseCase.call(starChartModel);
       value = StarChartPageState.success;
     } on GenericErrorStatusCodeException {
       value = StarChartPageState.genericError;

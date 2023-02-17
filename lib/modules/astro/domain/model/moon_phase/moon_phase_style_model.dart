@@ -1,5 +1,7 @@
-class MoonPhaseStyleModel {
-  MoonPhaseStyleModel({
+import 'package:equatable/equatable.dart';
+
+class MoonPhaseStyleModel extends Equatable {
+  const MoonPhaseStyleModel({
     required this.moonStyle,
     required this.backgroundStyle,
     required this.backgroundColor,
@@ -12,4 +14,13 @@ class MoonPhaseStyleModel {
   final String backgroundColor;
   final String headingColor;
   final String textColor;
+
+  @override
+  List<Object?> get props => [
+        moonStyle,
+        backgroundStyle,
+        backgroundColor,
+        headingColor,
+        textColor,
+      ];
 }
