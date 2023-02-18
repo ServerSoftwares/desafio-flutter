@@ -90,6 +90,22 @@ void main() {
           _getSuccessfulMoonPhaseImageDataModelMock();
       expect(imageDataModel, imageDataModelExpected);
     });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockDio.options).thenAnswer((_) => BaseOptions(
+            headers: {'authorization': 'Basic $encodedHash'},
+          ));
+      when(mockDio.post(
+        any,
+        options: anyNamed('options'),
+        data: anyNamed('data'),
+      )).thenThrow(Exception());
+      expect(
+          () => astroRemoteDataSourceImpl
+              .getMoonPhaseImage(_getDefaultMoonPhaseModel()),
+          throwsException);
+    });
   });
   group('GIVEN a call on getBodyList', () {
     const getBodyListSuccessfulResponsePath =
@@ -106,7 +122,6 @@ void main() {
       await astroRemoteDataSourceImpl.getBodyList();
       verify(mockDio.get(any)).called(1);
     });
-
     test(
         'WHEN request is successful '
         'THEN it should return a BodyListDataModel', () async {
@@ -121,6 +136,18 @@ void main() {
       final bodyListDataModel = await astroRemoteDataSourceImpl.getBodyList();
       final bodyListDataModelExpected = _getSuccessfulBodyListDataModelMock();
       expect(bodyListDataModel, bodyListDataModelExpected);
+    });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockDio.options).thenAnswer((_) => BaseOptions(
+            headers: {'authorization': 'Basic $encodedHash'},
+          ));
+      when(mockDio.get(
+        any,
+        options: anyNamed('options'),
+      )).thenThrow(Exception());
+      expect(() => astroRemoteDataSourceImpl.getBodyList(), throwsException);
     });
   });
 
@@ -146,7 +173,6 @@ void main() {
         queryParameters: anyNamed('queryParameters'),
       )).called(1);
     });
-
     test(
         'WHEN request is successful'
         'THEN it should return a BodyDetailsModel', () async {
@@ -165,6 +191,22 @@ void main() {
 
       final bodyDetailsModelExpected = _getSuccessfulBodyDetailsModelMock();
       expect(bodyDetailsModel, bodyDetailsModelExpected);
+    });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockDio.options).thenAnswer((_) => BaseOptions(
+            headers: {'authorization': 'Basic $encodedHash'},
+          ));
+      when(mockDio.get(
+        any,
+        options: anyNamed('options'),
+        queryParameters: anyNamed('queryParameters'),
+      )).thenThrow(Exception());
+      expect(
+          () => astroRemoteDataSourceImpl.getBodyDetailsModel(
+              _getDefaultBodyModel(), 'sun'),
+          throwsException);
     });
   });
   group('GIVEN a call on getStarChartImage', () {
@@ -207,6 +249,22 @@ void main() {
       final imageDataModelExpected =
           _getSuccessfulStarChartImageDataModelMock();
       expect(imageDataModel, imageDataModelExpected);
+    });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockDio.options).thenAnswer((_) => BaseOptions(
+            headers: {'authorization': 'Basic $encodedHash'},
+          ));
+      when(mockDio.post(
+        any,
+        options: anyNamed('options'),
+        data: anyNamed('data'),
+      )).thenThrow(Exception());
+      expect(
+          () => astroRemoteDataSourceImpl
+              .getStarChartImage(_getDefaultStarChartModel()),
+          throwsException);
     });
   });
 }

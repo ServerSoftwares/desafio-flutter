@@ -64,6 +64,16 @@ void main() {
               .getMoonPhaseImage(_getDefaultMoonPhaseModel()))
           .called(1);
     });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockAstroRemoteDataSource.getMoonPhaseImage(any))
+          .thenThrow(Exception());
+      expect(
+          () => astroRepositoryImpl
+              .getMoonPhaseImage(_getDefaultMoonPhaseModel()),
+          throwsException);
+    });
   });
   group('GIVEN a call on getBodyList', () {
     test(
@@ -74,6 +84,12 @@ void main() {
       final bodyListDataModel = await astroRepositoryImpl.getBodyList();
       final bodyListDataModelExpected = _getSuccessfulBodyListDataModelMock();
       expect(bodyListDataModel, bodyListDataModelExpected);
+    });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockAstroRemoteDataSource.getBodyList()).thenThrow(Exception());
+      expect(() => astroRepositoryImpl.getBodyList(), throwsException);
     });
   });
   group('GIVEN a call on getBodyDetailsModel', () {
@@ -87,6 +103,16 @@ void main() {
       final bodyDetailsModelExpected = _getSuccessfulBodyDetailsModelMock();
       expect(bodyDetailsModel, bodyDetailsModelExpected);
     });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockAstroRemoteDataSource.getBodyDetailsModel(any, any))
+          .thenThrow(Exception());
+      expect(
+          () => astroRepositoryImpl.getBodyDetailsModel(
+              _getDefaultBodyModel(), 'sun'),
+          throwsException);
+    });
   });
   group('GIVEN a call on GetStarChartImage', () {
     test(
@@ -99,6 +125,16 @@ void main() {
       final imageDataModelExpected =
           _getSuccessfulMoonPhaseImageDataModelMock();
       expect(imageDataModel, imageDataModelExpected);
+    });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockAstroRemoteDataSource.getStarChartImage(any))
+          .thenThrow(Exception());
+      expect(
+          () => mockAstroRemoteDataSource
+              .getStarChartImage(_getDefaultStarChartModel()),
+          throwsException);
     });
   });
 }

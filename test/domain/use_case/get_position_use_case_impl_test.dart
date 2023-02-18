@@ -25,7 +25,7 @@ void main() {
       'THEN it should return a Position', () async {
     when(mockGeolocatorRepository.getPosition())
         .thenAnswer((_) async => _getPositionMock());
-    final position = await mockGeolocatorRepository.getPosition();
+    final position = await getPositionUseCase.call();
     final positionExpected = _getPositionMock();
     expect(position, positionExpected);
     verify(mockGeolocatorRepository.getPosition()).called(1);

@@ -38,11 +38,19 @@ void main() {
         'THEN it should return a BodyDetailsModel', () async {
       when(mockAstroRepository.getBodyDetailsModel(any, any))
           .thenAnswer((_) async => _getBodyDetailsModelMock());
-      final bodyDetailsModel = await mockAstroRepository.getBodyDetailsModel(
+      final bodyDetailsModel = await getBodyDetailsModelUseCase.call(
           _getDefaultBodyModel(), 'sun');
       final bodyDetailsModelExpected = _getBodyDetailsModelMock();
       expect(bodyDetailsModel, bodyDetailsModelExpected);
       verify(mockAstroRepository.getBodyDetailsModel(any, any)).called(1);
+    });
+    test(
+        'WHEN request fails'
+            'THEN it should return an Exception', () async {
+      when(mockAstroRepository.getBodyDetailsModel(any, any))
+          .thenThrow(Exception());
+      expect(() => mockAstroRepository.getBodyDetailsModel(
+          _getDefaultBodyModel(), 'sun'), throwsException);
     });
   });
 }

@@ -39,6 +39,13 @@ void main() {
       verify(mockAstroRepository.getMoonPhaseImage(_getDefaultMoonPhaseModel()))
           .called(1);
     });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockAstroRepository.getMoonPhaseImage(any)).thenThrow(Exception());
+      expect(() => getMoonPhaseImageUseCase.call(_getDefaultMoonPhaseModel()),
+          throwsException);
+    });
   });
 }
 

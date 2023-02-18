@@ -86,6 +86,7 @@ class _StarChartPageState extends State<StarChartPage> {
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               Expanded(
                 child: Center(
                   child: ValueListenableBuilder<StarChartPageState>(

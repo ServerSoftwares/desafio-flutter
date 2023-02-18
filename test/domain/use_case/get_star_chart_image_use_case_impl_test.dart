@@ -32,11 +32,18 @@ void main() {
         'THEN it should return an ImageDataModel', () async {
       when(mockAstroRepository.getStarChartImage(any))
           .thenAnswer((realInvocation) async => _getImageDataModelMock());
-      final imageDataModel = await mockAstroRepository
-          .getStarChartImage(_getDefaultStarChartModel());
+      final imageDataModel =
+          await getStarChartImageUseCase.call(_getDefaultStarChartModel());
       final imageDataModelExpected = _getImageDataModelMock();
       expect(imageDataModel, imageDataModelExpected);
       verify(mockAstroRepository.getStarChartImage(any)).called(1);
+    });
+    test(
+        'WHEN request fails'
+        'THEN it should return an Exception', () async {
+      when(mockAstroRepository.getStarChartImage(any)).thenThrow(Exception());
+      expect(() => getStarChartImageUseCase.call(_getDefaultStarChartModel()),
+          throwsException);
     });
   });
 }

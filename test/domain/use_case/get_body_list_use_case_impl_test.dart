@@ -32,6 +32,13 @@ void main() {
       expect(bodyListDataModel, bodyListDataModelExpected);
       verify(mockAstroRepository.getBodyList()).called(1);
     });
+    test(
+        'WHEN request fails'
+            'THEN it should return an Exception', () async {
+      when(mockAstroRepository.getBodyList())
+          .thenThrow(Exception());
+      expect(() => getBodyListUseCase.call(), throwsException);
+    });
   });
 }
 

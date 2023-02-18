@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -134,6 +133,7 @@ class _MoonPhasePageState extends State<MoonPhasePage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
               Expanded(
                 child: Center(
                   child: ValueListenableBuilder<MoonPhasePageState>(

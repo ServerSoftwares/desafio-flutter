@@ -98,19 +98,20 @@ class MoonPhasePageController extends ValueNotifier<MoonPhasePageState> {
 
   Future<void> verifyIfImageIsSaved() async {
     isImageSaved.value =
-        await _verifyIfImageIsSavedUseCase.call(selectedDate.formatDate(true));
+        await _verifyIfImageIsSavedUseCase.call(getImageId());
   }
 
   Future<void> saveMoonPhaseImage() async {
-    await _saveMoonPhaseImageUseCase.call(
-        image!, selectedDate.formatDate(true));
+    await _saveMoonPhaseImageUseCase.call(image!, getImageId());
     await verifyIfImageIsSaved();
   }
 
   Future<void> deleteMoonPhaseImage() async {
-    await _deleteMoonPhaseImageUseCase.call(selectedDate.formatDate(true));
+    await _deleteMoonPhaseImageUseCase.call(getImageId());
     await verifyIfImageIsSaved();
   }
+
+  String getImageId()=> '${selectedDate.formatDate(true)}/$currentPosition';
 }
 
 class DefaultParameters {
