@@ -24,12 +24,12 @@ Clean Architecture + MVVM
 - Internaciolização: Flutter Intl;
 - Banco de dados local: Hive;
 - Geolocalização: Geolocator;
-- Widgetbook: Widgetbook;
+- Testes visuais de componentes: Widgetbook;
 - Testes unitários: Mockito;
 
 ## Screenshots:
 
-<img height="480px" src="assets/images_read_me/img1.png"> <img height="480px" src="assets/images_read_me/img2.png"> <img height="480px" src="assets/images_read_me/img3.png"> <img height="480px" src="assets/images_read_me/img4.png"> <img height="480px" src="assets/images_read_me/img5.png"> <img height="480px" src="assets/images_read_me/img6.png"> <img height="480px" src="assets/images_read_me/img7.png"> <img height="480px" src="assets/images_read_me/img8.png"> <img height="480px" src="assets/images_read_me/img9.png"> <img height="480px" src="assets/images_read_me/img10.png"> <img height="480px" src="assets/images_read_me/img11.png"> <img height="480px" src="assets/images_read_me/img12.png"> <img height="480px" src="assets/images_read_me/img13.png"> <img height="480px" src="assets/images_read_me/img14.png"> <img height="480px" src="assets/images_read_me/img15.png">
+<img height="480px" src="assets/images_read_me/img1.png"> <img height="480px" src="assets/images_read_me/img2.png"> <img height="480px" src="assets/images_read_me/img3.png"> <img height="480px" src="assets/images_read_me/img4.png"> <img height="480px" src="assets/images_read_me/img4_1.png"> <img height="480px" src="assets/images_read_me/img5.png"> <img height="480px" src="assets/images_read_me/img6.png"> <img height="480px" src="assets/images_read_me/img7.png"> <img height="480px" src="assets/images_read_me/img8.png"> <img height="480px" src="assets/images_read_me/img9.png"> <img height="480px" src="assets/images_read_me/img10.png"> <img height="480px" src="assets/images_read_me/img11.png"> <img height="480px" src="assets/images_read_me/img12.png"> <img height="480px" src="assets/images_read_me/img13.png"> <img height="480px" src="assets/images_read_me/img14.png"> <img height="480px" src="assets/images_read_me/img15.png">
 
 
 
