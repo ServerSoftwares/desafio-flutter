@@ -1,35 +1,35 @@
-# Desafio Flutter
+## App Flutter
 
-## Passos para realizar o desafio
+Desafio para a vada em Desenvolvimento Flutter da empresa Server Softwares para Varejo.
 
-- Você deverá realizar o fork deste projeto e desenvolver o aplicativo conforme descrito abaixo
-- Faça o checkout do fork e desenvolva sua aplicação localmente
-- Após finalizar o desenvolvimento, realize um pull request para o nosso repositório
+## Telas:
 
-# Descritivo do desafio
+- Tela de Fase da Lua: Tela na qual é realizada uma requisição para obter uma imagem da fase da Lua para a data selecionada;
 
-## Aplicativo "Observador"
+- Tela de Corpo Celeste (Ícone do Sol): Tela na qual são realizadas duas requisições: uma para obter os corpos celestes disponíveis do Sistema Solar e outra para obter os dados do corpo celeste selecionado;
 
-O desenvolvimento do aplicativo consiste em consumir uma API de dados de astronomia, esta API é pública e você podera obter a documentação e método de autenticação no endereço a seguir: https://docs.astronomyapi.com/.
+- Tela de Constelação (Ícone da Estrela): Tela na qual é realizada uma requisição para obter uma imagem da constelação selecionada;
 
-Seu objetivo é realizar o consumo desta API, seguindo o escopo abaixo:
+- Tela de Favoritos (Íconde do Coração): Tela na qual são exibidas as imagens da Fase da Lua salvas na tela inicial;
 
-- Tela inicial deve exibir informações sobre a fase da lua, enviando os dados do observador (usuário) para API. Você deve obter a geolocalização do usuário para o envio. (https://docs.astronomyapi.com/endpoints/studio/moon-phase)
+## Arquitetura:
 
-- A tela inicial deverá carregar as informações sobre a fase da lua naquele momento (com a data atual) e possibilitar que o usuário altere a data. Ao alterar a data, as informações sobre a fase da lua deverão ser reconsultadas e atualizadas em tela.
+Clean Architecture + MVVM
 
-- Você deverá desenvolver uma tela, onde será possivel obter os dados de um corpo celeste. Você deverá permitir ao usuário filtrar pelos corpos celestes do sistema solar. (https://docs.astronomyapi.com/endpoints/bodies)
+## Principais bibliotecas:
 
-- Você deverá desenvolver uma tela, onde será possivel obter os dados de uma constelação, deverá ter a opção de filtro entre as constelações a seguir: Andrômeda, Pegasus e Órion. Ao realizar a consulta na API, você receberá uma imagem da constelação, esta imagem deverá ser exibida na tela. (https://docs.astronomyapi.com/endpoints/studio/star-chart)
+- Gerenciamento de estado: Value Notifier;
+- Requisições HTTP: Dio;
+- Injecão de dependência e gerenciamento de rotas: Flutter Modular;
+- Internaciolização: Flutter Intl;
+- Banco de dados local: Hive;
+- Geolocalização: Geolocator;
+- Widgetbook: Widgetbook;
+- Testes unitários: Mockito;
+
+## Screenshots:
+
+<img height="480px" src="assets/images_read_me/img1.png"> <img height="480px" src="assets/images_read_me/img2.png"> <img height="480px" src="assets/images_read_me/img3.png"> <img height="480px" src="assets/images_read_me/img4.png"> <img height="480px" src="assets/images_read_me/img5.png"> <img height="480px" src="assets/images_read_me/img6.png"> <img height="480px" src="assets/images_read_me/img7.png"> <img height="480px" src="assets/images_read_me/img8.png"> <img height="480px" src="assets/images_read_me/img9.png"> <img height="480px" src="assets/images_read_me/img10.png"> <img height="480px" src="assets/images_read_me/img11.png"> <img height="480px" src="assets/images_read_me/img12.png"> <img height="480px" src="assets/images_read_me/img13.png"> <img height="480px" src="assets/images_read_me/img14.png"> <img height="480px" src="assets/images_read_me/img15.png">
 
 
-# Observações
-> Dica: Utililzar VS Code.
 
-- Você deverá obter a geolocalização do usuário e enviar em cada requisição.
-
-- Será considerado o tratamento de falhas da aplicação, então observar o cuidado na manipulação de erros da API.
-
-- Está liberado utilização de bibliotecas. (Atualmente estamos utilizando GetX em nossos projetos).
-
-- O programa pode ser minimalista, pode ter só o mínimo de funcionalidade necessária para realizar as operações pedidas e nada mais.
