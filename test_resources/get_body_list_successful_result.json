@@ -1,0 +1,17 @@
+{
+  "data": {
+    "bodies": [
+      "sun",
+      "moon",
+      "mercury",
+      "venus",
+      "earth",
+      "mars",
+      "jupiter",
+      "saturn",
+      "uranus",
+      "neptune",
+      "pluto"
+    ]
+  }
+}

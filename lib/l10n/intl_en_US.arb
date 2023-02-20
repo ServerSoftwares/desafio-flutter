@@ -1,0 +1,18 @@
+{
+  "@@locale": "en_US",
+  "moonPhasePageAppBarTitle": "Observer App",
+  "moonPhasePagePickDate": "Pick a date:",
+  "genericError": "An error has occurred!",
+  "failedConnection": "Connection failed!",
+  "emptyList": "No body available!",
+  "positionError": "Permission to access location failed!",
+  "tryAgain": "Try Again",
+  "celestialBodyPageAppBarTitle": "Celestial Bodies",
+  "celestialBodyPagePickBody": "Pick a body:",
+  "celestialBodyPagePickBodyPosition": "Position (degrees): ",
+  "celestialBodyPagePickBodyDistance": "Distance from Earth (Km): ",
+  "starChartPageAppBarTitle": "Star Chart",
+  "starChatPagePickConstellation": "Pick a constellation",
+  "moonPhaseImageListPageAppBarTitle": "Favorites",
+  "moonPhaseImageListPageEmpty": "No image saved as favorite"
+}
